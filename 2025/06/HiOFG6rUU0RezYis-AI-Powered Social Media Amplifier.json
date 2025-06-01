@@ -1,0 +1,1199 @@
+{
+  "active": false,
+  "connections": {
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Filter Unposted Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ping Me": {
+      "main": [
+        [
+          {
+            "node": "Get photo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "Update L Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Item": {
+      "main": [
+        [
+          {
+            "node": "Ping Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Item": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Meta": {
+      "main": [
+        [
+          {
+            "node": "Search Item",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Crawl HN Home": {
+      "main": [
+        [
+          {
+            "node": "Extract Meta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Visit GH Page": {
+      "main": [
+        [
+          {
+            "node": "Convert HTML To Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Errored": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update L Status": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Crawl HN Home",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Unposted Items": {
+      "main": [
+        [
+          {
+            "node": "Visit GH Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert HTML To Markdown": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Generate Content": {
+      "main": [
+        [
+          {
+            "node": "Filter Errored",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for 5 mins before posting": {
+      "main": [
+        [
+          {
+            "node": "get photo 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Validate Generate Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Get photo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get photo": {
+      "main": [
+        [
+          {
+            "node": "Create Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "Wait for 5 mins before posting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get photo1": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get photo 2": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-01T21:51:30.414Z",
+  "id": "HiOFG6rUU0RezYis",
+  "isArchived": false,
+  "meta": null,
+  "name": "AI-Powered Social Media Amplifier",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://news.ycombinator.com/",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "f82ad3c4-d638-4d23-ae02-1206384294df",
+      "name": "Crawl HN Home",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -1220,
+        680
+      ],
+      "executeOnce": true,
+      "typeVersion": 4.2,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Import necessary modules\nimport asyncio\nimport micropip\n\n# Define an asynchronous function to install packages\nasync def install_packages():\n    await micropip.install(\"beautifulsoup4\")\n    await micropip.install(\"simplejson\")\n\n# Run the asynchronous package installation\nasyncio.get_event_loop().run_until_complete(install_packages())\n\n# Now, import the installed packages\nimport simplejson as json\nfrom bs4 import BeautifulSoup\n\n# Retrieve the HTML content from the first item in the input\n# Assuming n8n passes data as a list of items, each with a 'json' key\nhtml_content = items[0].get('json', {}).get('data', '')\n\n# Initialize BeautifulSoup with the HTML content\nsoup = BeautifulSoup(html_content, 'html.parser')\n\n# Initialize a list to store metadata of GitHub posts\ngithub_posts = []\n\n# Find all 'tr' elements with class 'athing submission'\nposts = soup.find_all('tr', class_='athing submission')\n\nfor post in posts:\n    post_id = post.get('id')\n    title_line = post.find('span', class_='titleline')\n    if not title_line:\n        continue  # Skip if titleline is not found\n\n    # Extract the title and URL\n    title_tag = title_line.find('a')\n    if not title_tag:\n        continue  # Skip if title tag is not found\n\n    title = title_tag.get_text(strip=True)\n    url = title_tag.get('href', '')\n\n    # Check if the URL is a GitHub link\n    if 'github.com' not in url.lower():\n        continue  # Skip if not a GitHub link\n\n    # Extract the site domain (e.g., github.com/username/repo)\n    site_bit = title_line.find('span', class_='sitebit comhead')\n    site = site_bit.find('span', class_='sitestr').get_text(strip=True) if site_bit else ''\n\n    # The subtext is in the next 'tr' element\n    subtext_tr = post.find_next_sibling('tr')\n    if not subtext_tr:\n        continue  # Skip if subtext row is not found\n\n    subtext_td = subtext_tr.find('td', class_='subtext')\n    if not subtext_td:\n        continue  # Skip if subtext td is not found\n\n    # Extract score\n    score_span = subtext_td.find('span', class_='score')\n    score = score_span.get_text(strip=True) if score_span else '0 points'\n\n    # Extract author\n    author_a = subtext_td.find('a', class_='hnuser')\n    author = author_a.get_text(strip=True) if author_a else 'unknown'\n\n    # Extract age\n    age_span = subtext_td.find('span', class_='age')\n    age_a = age_span.find('a') if age_span else None\n    age = age_a.get_text(strip=True) if age_a else 'unknown'\n\n    # Extract comments\n    comments_a = subtext_td.find_all('a')[-1] if subtext_td.find_all('a') else None\n    comments_text = comments_a.get_text(strip=True) if comments_a else '0 comments'\n\n    # Construct the Hacker News URL\n    hn_url = f\"https://news.ycombinator.com/item?id={post_id}\"\n\n    # Compile the metadata\n    post_metadata = {\n        'Post': post_id,\n        'title': title,\n        'url': url,\n        'site': site,\n        'score': score,\n        'author': author,\n        'age': age,\n        'comments': comments_text,\n        'hn_url': hn_url\n    }\n\n    # Append to the list of GitHub posts\n    github_posts.append(post_metadata)\n\n# Prepare the output for n8n\noutput = [{'json': post} for post in github_posts]\n\n# Return the output\nreturn output\n"
+      },
+      "id": "37e90a57-f884-4435-94d0-e328e9ac732f",
+      "name": "Extract Meta",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -940,
+        760
+      ],
+      "executeOnce": false,
+      "typeVersion": 2,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = [];\n\n// Step 1: Collect all Post IDs from input1 items (those with 'id')\nconst processedPosts = new Set(\n  $input.all()\n    .filter(item => item.json.id)\n    .map(item => item.json.Post)\n);\n\n// Step 2: Iterate over all items and filter out duplicates\nfor (const item of $input.all()) {\n  \n  // Only process items without 'id' (input2 items)\n  if(!item.json.id){\n    \n    // Check if the Post ID is already processed\n    if(!processedPosts.has(item.json.Post) && item.json.Post!=undefined){\n      items.push(item);\n    }\n  }\n}\n\nreturn items;\n"
+      },
+      "id": "fb9f33b2-ac88-4d20-a17c-75314d3bfd3f",
+      "name": "Filter Unposted Items",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        -360,
+        680
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "id": "98123f77-4f2b-4f29-a9ce-0a4a54f3d1aa",
+      "name": "Visit GH Page",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -100,
+        460
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {}
+      },
+      "id": "06844d80-8b56-4792-bf4f-f95f4621071d",
+      "name": "Convert HTML To Markdown",
+      "type": "n8n-nodes-base.markdown",
+      "position": [
+        80,
+        740
+      ],
+      "typeVersion": 1,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "7776cb97-e02d-418e-a168-612bf92d4160",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.error }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f6d0ecc2-85eb-4676-a6fb-3ee798e1682f",
+      "name": "Filter Errored",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        700,
+        480
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {},
+      "id": "bdd5bbb4-448e-4cff-a82b-76fa64d75a5e",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        3640,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "person": "7ZIi3jyY9C",
+        "text": "={{ $('Create Item').item.json.fields.linkedin }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {
+          "visibility": "PUBLIC"
+        }
+      },
+      "id": "3887d176-19e2-4b00-9136-cf462462bdbd",
+      "name": "LinkedIn",
+      "type": "n8n-nodes-base.linkedIn",
+      "position": [
+        3080,
+        680
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appnlmWYGADg4q8St",
+          "mode": "list",
+          "cachedResultName": "Automatic posts agent",
+          "cachedResultUrl": "https://airtable.com/appnlmWYGADg4q8St"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbldJcUEsR1qmKLW9",
+          "mode": "list",
+          "cachedResultName": "My posts",
+          "cachedResultUrl": "https://airtable.com/appnlmWYGADg4q8St/tbldJcUEsR1qmKLW9"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "posted?": true,
+            "id": "={{ $('Create Item').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Post",
+              "displayName": "Post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Url",
+              "displayName": "Url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "linkedin",
+              "displayName": "linkedin",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "photo",
+              "displayName": "photo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "posted?",
+              "displayName": "posted?",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "94897393-243f-470e-b7d9-c1e820d6174d",
+      "name": "Update L Status",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        3400,
+        540
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appnlmWYGADg4q8St",
+          "mode": "list",
+          "cachedResultName": "Automatic posts agent",
+          "cachedResultUrl": "https://airtable.com/appnlmWYGADg4q8St"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbldJcUEsR1qmKLW9",
+          "mode": "list",
+          "cachedResultName": "My posts",
+          "cachedResultUrl": "https://airtable.com/appnlmWYGADg4q8St/tbldJcUEsR1qmKLW9"
+        },
+        "filterByFormula": "={Post}= {{ $json.Post }}",
+        "options": {
+          "fields": "=Title,Url,Date,Post"
+        }
+      },
+      "id": "e2a3eff6-7aeb-4835-a5fc-cb4301867171",
+      "name": "Search Item",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        -780,
+        280
+      ],
+      "typeVersion": 2.1,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appnlmWYGADg4q8St",
+          "mode": "list",
+          "cachedResultName": "Automatic posts agent",
+          "cachedResultUrl": "https://airtable.com/appnlmWYGADg4q8St"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbldJcUEsR1qmKLW9",
+          "mode": "list",
+          "cachedResultName": "My posts",
+          "cachedResultUrl": "https://airtable.com/appnlmWYGADg4q8St/tbldJcUEsR1qmKLW9"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $('Code1').item.json.keywords }}",
+            "Url": "={{ $('Code1').item.json.URL }}",
+            "Date": "={{ $now }}",
+            "Post": "={{ $('Code1').item.json.post }}",
+            "linkedin": "={{ $('Code1').item.json.text }}",
+            "photo": "={{ $json.results[0].urls.raw }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Post",
+              "displayName": "Post",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Url",
+              "displayName": "Url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "linkedin",
+              "displayName": "linkedin",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "photo",
+              "displayName": "photo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ]
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "f1b27fba-8c89-4d3e-8336-68057be41189",
+      "name": "Create Item",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        1920,
+        540
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "console.log($json.text)"
+      },
+      "id": "59b8d5f6-6100-4181-afb1-1e9b757f738b",
+      "name": "Validate Generate Content",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        500,
+        720
+      ],
+      "typeVersion": 2,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "d53b3061-d1c5-420a-b83a-658ff7e4f655",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -1460,
+        680
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {},
+      "id": "4ebac172-89ec-49b9-aa97-571277e47488",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        -520,
+        460
+      ],
+      "typeVersion": 3,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an AI-powered social media assistant specialized in crafting short-form, engaging posts for Twitter and LinkedIn. Your tone should blend the enthusiasm of a Tech Evangelist with the narrative depth of a Storyteller. The goal is to highlight technological and open-source projects in a friendly, forward-thinking manner, connecting them to real-world use cases. \n\nGuidelines:\n1. Output must be in JSON with separate fields for “twitter” and “linkedin.”\n2. Do not include emojis or marketing buzzwords (“cutting-edge,” “disruptive,” etc.).\n3. Write naturally and concisely. Avoid overly formal or robotic language.\n4. Twitter posts must be under 280 characters (including spaces and URL).\n5. LinkedIn posts should be slightly longer, yet still succinct, and focus on storytelling and real-world applications.\n6. Provide a single call-to-action in each post.\n7. Do not imply ownership of the project unless explicitly stated.\n8. Maintain a professional yet approachable tone in both outputs.\n",
+              "role": "system"
+            },
+            {
+              "content": "=Using the following details, generate two posts—one for Twitter and one for LinkedIn—incorporating an enthusiastic yet narrative-driven style:\n\nTitle: {{ $('Filter Unposted Items').item.json.title }}\nDetails in markdown: {{ $json.data }}\nRepository Link: {{ $('Filter Unposted Items').item.json.url }}  (this is the actual link you want to be inserted)\n\nConstraints:\n- No emojis.\n- Keep the Twitter post under 280 characters (including the link).\n- Use a friendly, forward-thinking tone that weaves in a short narrative where possible.\n- Highlight how the project solves a real problem or benefits the user.\n- End each post with one clear CTA (e.g., “Check it out!” or “Learn more.”).\n- **Ensure the tone is neutral and does not imply personal involvement** (e.g., avoid phrases like \"my journey\" or \"I found it fascinating\").\n- **LinkedIn post should be more detailed**: Provide context, explain the key features, highlight how it can be useful to different audiences, and elaborate on the problem it solves or the impact it can have.\n- Output your response in JSON with the structure:\n```json\n{\n  \"twitter\": \"Your Twitter post here\",\n  \"linkedin\": \"Your LinkedIn post here\"\n}\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "70885e73-327d-4a81-8b8c-3a37b4dcb92a",
+      "name": "Generate Content",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        180,
+        140
+      ],
+      "typeVersion": 1.7,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "Automate the curation and sharing of trending GitHub discussions from Hacker News to Twitter and LinkedIn. This workflow leverages AI to generate engaging posts, streamlining your social media content creation and distribution.\n\n",
+        "height": 97.20332107671479,
+        "width": 619.8433261701165
+      },
+      "id": "cae26dee-f400-42b3-bc84-443acf7d3a07",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "I crawl Hacker News and extract Github links.",
+        "height": 420.37647358435385,
+        "width": 524.8824946275869,
+        "color": 5
+      },
+      "id": "326b3144-392d-4d4c-a34e-e844ea52fae2",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1300,
+        560
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "This is where the magic happens. I use the Github url extracted earlier and visit Github page to get more insights in the project being shared. Then I ask Chat GPT very nicely to help me get a Tweet and a LinkedIn post",
+        "height": 670.031562962293,
+        "width": 828.144505037599,
+        "color": 5
+      },
+      "id": "c4fa1267-ff3a-4f10-b2ec-ee0975581dcb",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        320
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "chatId": "=141617512",
+        "text": "=Hi There, here is your readymade linkedin post - \n\n{{ $json.fields.Title }}\n{{ $json.fields.linkedin }}\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "69c532d2-7703-41c3-aabe-d52d231048d5",
+      "name": "Ping Me",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        2000,
+        280
+      ],
+      "typeVersion": 1.2,
+      "webhookId": "c96fc6f9-3a2c-445b-83e2-a5b879bdf119"
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "id": "dda52d98-a6ab-4dd9-82f4-cb71ecf6bf84",
+      "name": "Wait for 5 mins before posting",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        2540,
+        520
+      ],
+      "webhookId": "0c7ee388-30cf-4a99-9bb0-0fd85171c794",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "content": "CHORE",
+        "height": 392.80719991071624,
+        "width": 400.8207630962184
+      },
+      "id": "3682b541-f960-4d9a-8c3b-120740ecfd9f",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -480,
+        540
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "Make sure we don't post the same content again.",
+        "height": 285.5933578465706,
+        "width": 195.58283685913963,
+        "color": 5
+      },
+      "id": "af0e1c5d-2d01-429e-9219-a9646adde885",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -820,
+        180
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an AI-powered assistant tasked with creating high-impact LinkedIn posts that highlight the real-world impact and innovation of technology and open-source projects. Your goal is to craft posts that are not only informative but also inspiring, engaging, and optimized for shareability while maintaining a professional yet approachable tone. Use a narrative-driven style to simplify complex concepts, connect with diverse audiences, and highlight tangible outcomes. \n\nALWAYS include relevant URLs in the post, and DO NOT use markdown. The text can contain emojis and line breaks (`\\n`) but NO markdown formatting.\n\nHere’s an example post structure:\n\n\"Inspired and re-energized after attending OYW2024 🌍✨  \nThe 2024 One Young World Summit has wrapped up, and I’m heading back to Ambulis & Duke University, feeling more motivated than ever to make a difference for my team and community.  \nAs a BMO Changemaker, I had the opportunity to engage with leaders from various sectors and hear their insights on driving meaningful change.  \nHere are my top 3 takeaways:  \n► Collaboration is Key – Real impact happens when industries and nations unite to solve global challenges.  \n► Innovate with Purpose – Technology, including AI, is a force for good only when driven by sustainable goals.  \n► Leadership in Complexity – A conversation with Luis Javier Castro reshaped my view on solving challenges in an exponential world.  \nI’m excited to apply these lessons and keep growing alongside my community.  \n\nhashtag#OYW24 hashtag#Changemaker hashtag#Leadership hashtag#GlobalImpact hashtag#Innovation\"\n\n### Your task:\n\n1. **Create a post with the following structure:**\n   - A **hook** – Grab attention with an impactful opening.\n   - 3-4 **concise and engaging paragraphs** – Clearly present the core message.\n   - A **strong call-to-action** – Encourage engagement and interaction from the audience.\n   - 3-7 **strategic hashtags** – Boost visibility and reach.\n   - **Selective use of emojis** – Enhance readability without overloading.\n   - **Hashtags** - include relevant hashtags to go viral at the end of the post!\n\n2. **Ensure that the post includes the URL of the content ALWAYS.**\n\n3. **Return the post in a JSON format** with:\n   - `linkedIn`: The formatted post text.\n   - `keywords`: Key themes or focus of the post to guide visual inspiration, separated by commas (e.g., \"leadership\", \"innovation\", \"collaboration\").\n\nThe response should be in this format:\n```json\n[\n  {\n    \"linkedIn\": \"Your post content here\",\n    \"keyword\": \"your keyword here\"\n  }\n]\n``` \n\nMake sure the text is clear, engaging, and professionally formatted without markdown!",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Using the following details, generate a LinkedIn post incorporating an enthusiastic yet narrative-driven style. Make sure to add the URL to the post! The title is {{ $('Filter Unposted Items').item.json.title }}, the url {{ $('Filter Unposted Items').item.json.url }} and additional details are provided in markdown as {{ $json.data }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        200,
+        500
+      ],
+      "id": "f00896c8-7ca3-479f-8d73-6e169ca9d899",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        200,
+        1040
+      ],
+      "id": "555f6566-4b50-4d07-9be0-8f52a89ec5e5",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a LinkedIn content strategist passionate about innovation, health tech, quantum computing, and artificial intelligence, with expertise in hardware and software. Your task is to identify the most engaging LinkedIn content from a list of provided options. The goal is to select a post that will resonate most with a tech-savvy audience, including innovators and professionals, by highlighting groundbreaking advancements, practical applications, and thought leadership that integrate these fields seamlessly.\n\nThe selected content should align with Wanghley, a highly skilled and passionate computer engineer specializing in health tech, quantum computing, and AI. Wanghley is committed to developing solutions that improve lives, address real-world challenges, and drive progress. The choice should reflect cutting-edge innovation, practical value, and the potential to inspire collaboration and transformative change within the tech community.\n\nReturn ONLY the index number of the best content option. Each piece of content will be separated by a single '|'. DO NOT CREATE NEW CONTENT OR ELABORATE—JUST RETURN ONE NUMBER.",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "=Select one from the following:\n{{ $json.contents }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1100,
+        240
+      ],
+      "id": "20fb28cf-03f2-4c28-99fb-2087fe514299",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// In a Function node before the AI node\nconst items = $input.all(); // Get all items\nconst content = items.map(item => item.json.linkedIn).join(' | ');; \nreturn {\n  json: {\n    items: items,\n    contents: content,\n    prompt: `Compare the following items and select the best one based on [your criteria]:\n    ${JSON.stringify(items)}\n    Return only the best item as a JSON object.`\n  }\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        240
+      ],
+      "id": "797fd428-4924-48ea-b825-8c4f94057d22",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-specdec",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        920,
+        500
+      ],
+      "id": "5c37121b-ba12-4e07-9917-ad1f6ff6bc60",
+      "name": "Groq Chat Model"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        500
+      ],
+      "id": "798c9943-6e81-407a-880b-a694f8498f75",
+      "name": "Google Gemini Chat Model1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const ix = Number($('Basic LLM Chain1').all()[0].json.text);\nconsole.log($('Filter Unposted Items').all()[ix].json)\nconst title = $('Filter Unposted Items').all()[ix].json.title\nconst post = $('Filter Unposted Items').all()[ix].json.Post\nconst url = $('Filter Unposted Items').all()[ix].json.url\nconst text = $('Code').all()[0].json.items[ix].json.linkedIn\nconst keywords = $('Code').all()[0].json.items[ix].json.keywords\nconst result = {\n  \"title\": title,\n  \"post\": post,\n  \"URL\": url,\n  \"text\": text,\n  \"keywords\": keywords\n}\nreturn result"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        540
+      ],
+      "id": "c8721528-3482-4d73-81a3-e264f8f3231d",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.unsplash.com/search/photos",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.keywords }}"
+            },
+            {
+              "name": "per_page",
+              "value": "1"
+            },
+            {
+              "name": "orientation",
+              "value": "landscape"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Client-ID jKoha2Ht10hIXiyptarZh2OHyIYwPUOeI9v437BDzeo"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1420,
+        540
+      ],
+      "id": "a88a7c48-d303-4bcf-a660-413802c5f996",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.results[0].urls.raw }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1640,
+        540
+      ],
+      "id": "fe14d94a-9ce6-4df2-bd3e-be3f951bac0d",
+      "name": "Get photo"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "141617512",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2380,
+        280
+      ],
+      "id": "7b3c9ea3-d413-4fc7-8a9f-e0d596a25094",
+      "name": "Telegram",
+      "webhookId": "8e0bb983-76ec-43d9-8be4-57875547c140"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Create Item').item.json.fields.photo }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2180,
+        280
+      ],
+      "id": "b4fecd83-bf1f-4895-a81e-d66e1f7f4329",
+      "name": "Get photo1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Create Item').item.json.fields.photo }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2760,
+        520
+      ],
+      "id": "38fafdb4-4109-4916-8f2a-a9c0ad40e956",
+      "name": "get photo 2"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.2-90b-vision-preview",
+        "options": {
+          "maxTokensToSample": 8192
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        300,
+        980
+      ],
+      "id": "ac8d3ce1-4bb4-46c0-9f22-94f201bb1677",
+      "name": "Groq Chat Model1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.2,
+      "position": [
+        460,
+        940
+      ],
+      "id": "9f3c5a49-ec0f-4b3f-b437-e0342cb0aa41",
+      "name": "Anthropic Chat Model"
+    },
+    {
+      "parameters": {
+        "options": {
+          "model": ""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmCohere",
+      "typeVersion": 1,
+      "position": [
+        260,
+        760
+      ],
+      "id": "1c1af610-b26a-47cd-bfe1-6e54388dca32",
+      "name": "Cohere Model"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-automations",
+  "repo_owner": "wanghley",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-01T21:51:30.414Z",
+  "versionId": "b117b91f-5cd5-4a80-87b8-7f48a9c3b37e"
+}
