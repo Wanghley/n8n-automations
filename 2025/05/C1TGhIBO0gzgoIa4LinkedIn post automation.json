@@ -1,0 +1,633 @@
+{
+  "active": true,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "GetPosts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "PostSorting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PostSorting": {
+      "main": [
+        [
+          {
+            "node": "Clean HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean HTML1": {
+      "main": [
+        [
+          {
+            "node": "Post writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Post writer",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post writer": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item List Output Parser": {
+      "ai_outputParser": [
+        []
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Unsplash searcher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unsplash searcher": {
+      "main": [
+        [
+          {
+            "node": "Get pictures",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Combine Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get pictures": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Binary": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetPosts": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Post writer",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-26T12:59:01.653Z",
+  "id": "C1TGhIBO0gzgoIa4",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "LinkedIn post automation",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f401ed36-d477-4944-8e84-4dd6f262b1e2",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        120,
+        260
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 1. Workflow Trigger\nThis workflow uses simple trigger.\n\n#### How to setup?\n*Nothing to do.*\n",
+        "height": 520,
+        "width": 200,
+        "color": 7
+      },
+      "id": "203df48c-5d06-4f7c-901e-d75f9040ba28",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        -100
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 2. Extract Blog Posts Content\nThe Ghost node extracts all the posts of your blog with content and metadata. In the second node, we extract description, URL, content and features image url.\n\n#### How to setup?\n- **Ghost Account API**:\n   1. Add your Ghost Blog Account Credentials\n   2. Select the number of Blog Posts you want to collect\n  [Learn more about the Ghost Node](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.ghost)\n\n",
+        "height": 520,
+        "width": 400,
+        "color": 7
+      },
+      "id": "adbe69e8-dd4a-4ee7-b070-1de42bb77574",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        300,
+        -100
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### [📺Complete Tutorial](https://www.youtube.com/watch?v=Lhi6hV6rWEo)\n![Thumbnail](https://www.samirsaci.com/content/images/2025/04/temp-4.png)\n",
+        "height": 460,
+        "width": 660
+      },
+      "id": "05424cab-f4fa-4d5a-a69b-ac475868ef2d",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        440
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://news.mit.edu/rss/topic/artificial-intelligence2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        360,
+        80
+      ],
+      "id": "8ba04097-9451-48e7-bedd-6ca159f8a996",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze the following article and score it for LinkedIn virality (scale 1-10):\n\n- Title: \"{{ $json['title'] }}\"\n- Description: \"{{ $json['description'] }}\"",
+        "options": {
+          "systemMessage": "You are a LinkedIn content strategist. You help select articles that have the highest potential to go viral on LinkedIn.\n\nRespond with JSON:\n{\n  \"score\": [1-10],\n  \"reason\": \"Short explanation of why this article is likely/unlikely to go viral.\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        840,
+        -320
+      ],
+      "id": "5c04be13-47e7-42be-99e9-74da194538d2",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -100
+      ],
+      "id": "19acff64-f445-449a-9af1-52eb9ad73520",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "wiJyJHFYEjrlnfDv",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $workflow.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        -100
+      ],
+      "id": "d4a24f3c-68e2-4116-94b6-791db96faee3",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input: Array of items with \"output\" field as JSON string\nconst itemsArray = $input.all()\n\n// Parse the scores\nconst parsedItems = itemsArray.map((item, index) => {\n  const data = JSON.parse(item.json.output);\n  return {\n    index,\n    score: data.score,\n    reason: data.reason,\n  };\n});\n\n// Find the highest score\nparsedItems.sort((a, b) => b.score - a.score);\nconst topItem = parsedItems[0];\n\n\nlet selectedPost = $('GetPosts').all()[topItem.index]\n\nreturn selectedPost"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        -320
+      ],
+      "id": "54e35ecb-ec37-4714-abe9-5eb2f44c2923",
+      "name": "PostSorting"
+    },
+    {
+      "parameters": {
+        "jsCode": "const htmlContent = $input.first().json.content\n\nconst cleanText = htmlContent\n  .replace(/<[^>]*>/g, '') // remove  tags\n  .replace(/\\s+/g, ' ')    // normalize spaces\n  .replace(/&nbsp;/g, ' ') // decode common entity\n  .trim();\n\nreturn [\n  {\n    json: {\n      clean_content: cleanText\n    }\n  }\n];\n"
+      },
+      "id": "ade1ad20-0221-48a0-9653-07448cf584c9",
+      "name": "Clean HTML1",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1460,
+        -320
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        -120
+      ],
+      "id": "629bf938-470d-4ddf-8eba-42b7983096d2",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "wiJyJHFYEjrlnfDv",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@wanghley.com",
+        "toEmail": "wanghleys@gmail.com",
+        "subject": "[automation] New LinkedIn post",
+        "emailFormat": "text",
+        "text": "={{ $('PostSorting').first().json.title }}\n{{ $('PostSorting').first().json.link }}\n{{ $('PostSorting').first().json.pubDate }}\n\n{{ $('Information Extractor').first().json.output.linkedin_post }}",
+        "options": {
+          "appendAttribution": false,
+          "attachments": "={{ Object.keys($binary).join(',') }}"
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        3800,
+        40
+      ],
+      "id": "292fce47-4247-4a3b-945a-4b9ebef57778",
+      "name": "Send Email",
+      "webhookId": "ec7229b8-bf38-45e2-9180-6fa93c3b7ab6",
+      "executeOnce": true,
+      "credentials": {
+        "smtp": {
+          "id": "k5WKDqvMjCnHSUOK",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Article Title: {{ $('PostSorting').item.json.title }}\nArticle Link: {{ $('PostSorting').item.json.link }}\nArticle Content: {{ $('PostSorting').item.json.content }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a LinkedIn content strategist tasked with helping Wanghley Soares Martins publish a post in Portuguese that seja tão cativante que viralize entre profissionais de IA, machine learning e tecnologia.\n\nUse estes dados de entrada: ID do artigo, título e conteúdo limpo. Crie um único objeto JSON com duas chaves: linkedin\\_post e picture\\_search\\_keyword.\n\nlinkedin\\_post deve seguir esta estrutura, sem formatação extra, apenas texto pronto para colar no LinkedIn, com quebras de linha (\\n):\n\n1. Gancho inicial (até 120 caracteres): uma pergunta, dado surpreendente ou insight ousado que prenda a atenção.\n2. Parágrafo curto: resuma o que o leitor vai aprender, inclua resultados, métricas ou insights-chave e transmita urgência ou entusiasmo.\n3. Linha em branco.\n4. Chamada à ação: convide a comentar, refletir ou compartilhar, use o título do artigo como texto clicável para o link e acrescente um convite pessoal para se conectar.\n5. Assinatura (exatamente):\n   Quer trocar ideias, pensar em soluções fora da caixa ou bolar gambiarras inteligentes para problemas reais?\n   —\n   @wanghley\n   📩 Bora bater um papo!\n6. Hashtags: 3 ou 4 no máximo, sendo 1 ou 2 amplas (#InteligênciaArtificial, #Inovação) e 1 ou 2 específicas (#LLMs, #MachineLearning, #SupplyChain).\n\npicture\\_search\\_keyword deve ser uma frase em inglês de 2–3 palavras que represente o tema principal (por exemplo: LLM model, robotics lab, AI healthcare).\n\nLimite total do post a 500 palavras e mantenha tom profissional e descontraído."
+        }
+      },
+      "id": "3a62aa7e-9629-4445-b134-a2e8f73e62ad",
+      "name": "Post writer",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1720,
+        -320
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "options": {
+          "separator": "\\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserItemList",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        -100
+      ],
+      "id": "8b5a5892-3158-483b-9bde-2e157432e5d1",
+      "name": "Item List Output Parser"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.output }}",
+        "schemaType": "fromJson",
+        "jsonSchemaExample": "{\n  \"linkedin_post\": \"<full post in Portuguese, including hook, summary, CTA, signature, and hashtags, and \\n >\",\n  \"picture_search_keyword\": \"<2-3 word topic for image search>\"\n}\n",
+        "options": {
+          "systemPromptTemplate": "You are an expert extraction algorithm.\nOnly extract relevant information from the text.\nIf you do not know the value of an attribute asked to extract, you may omit the attribute's value.\n\nKEEP \\n and dont change formating of linkedin_post! DO NOT REMOVE \\n formating at all!!!!"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        -320
+      ],
+      "id": "d83483db-8d39-4224-8176-1c5930077290",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "url": "https://api.unsplash.com/photos/random",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.output.picture_search_keyword }}"
+            },
+            {
+              "name": "count",
+              "value": "3"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2440,
+        -320
+      ],
+      "id": "006b8c5c-b042-4ae7-b180-883fd0e15f2a",
+      "name": "Unsplash searcher",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3ZGrXighXbKLt9i6",
+          "name": "Unsplash API key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2980,
+        -320
+      ],
+      "id": "0f68fce9-980a-49fc-aa17-489744ed60ee",
+      "name": "Extract from File",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data",
+        "options": {
+          "fileName": "data.jpg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3200,
+        -320
+      ],
+      "id": "6d9bd2ef-f099-46ae-9674-e1aea1c3108e",
+      "name": "Convert to File",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.urls.regular }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2700,
+        -320
+      ],
+      "id": "095f32d2-f4bf-4db4-bdf6-095971f5f615",
+      "name": "Get pictures"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate every incoming binary chunk into “data0”, “data1”, …\nconst binaryData = $input.all().reduce((acc, item, idx) => {\n  if (item.binary?.data) acc[`data${idx}`] = item.binary.data;\n  return acc;\n}, {});\n\n// First item: holds all binary blobs\nconst aggregatedBinaryItem = {\n  json: {},      // mandatory\n  binary: binaryData,\n};\n\nreturn aggregatedBinaryItem;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3420,
+        -320
+      ],
+      "id": "059450c9-1135-46e1-a180-b02af49ad5dd",
+      "name": "Combine Binary"
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- Function/Code node (no external libraries needed) ---\nconst xmlString = $input.first().json.data;\n\n// grab every <item> … </item>\nconst rawItems = [...xmlString.matchAll(/<item>([\\s\\S]*?)<\\/item>/g)];\n\nfunction extract(tag, block) {\n  const m = block.match(new RegExp(`<${tag}>([\\\\s\\\\S]*?)<\\\\/${tag}>`));\n  return m ? m[1].replace(/&amp;/g, '&').trim() : '';\n}\n\nconst posts = rawItems.map(it => {\n  const block = it[1];\n  return {\n    title:   extract('title',   block),\n    link:    extract('link',    block),\n    description: extract('description',    block),\n    content: extract('content:encoded',    block),\n    category: extract('category',    block),\n    pubDate: new Date(extract('pubDate', block))      // JS Date object\n  };\n});\n\n// newest first, take five\nconst top5 = posts\n  .sort((a, b) => b.pubDate - a.pubDate)\n  .slice(0, 5)\n  .map(p => ({\n    title:   p.title,\n    link:    p.link,\n    description: p.description,\n    category: p.category,\n    content: p.content,\n    pubDate: p.pubDate.toISOString()                  // nice ISO string\n  }));\n\nreturn top5;        //  ←  n8n will output this as a JSON array\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        580,
+        80
+      ],
+      "id": "9836152b-738f-4371-a6f0-0d41d362a3a3",
+      "name": "GetPosts"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $workflow.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2100,
+        -100
+      ],
+      "id": "02297f47-e9da-48ee-a3bc-45d137a4fe58",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        120,
+        100
+      ],
+      "id": "bf46bcd5-da2a-48d2-a773-6afbed7d494c",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-automations",
+  "repo_owner": "wanghley",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timeSavedPerExecution": 10
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": [
+        12
+      ]
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-01T20:19:57.077Z",
+  "versionId": "26683bd8-ee4f-46b8-9b8a-43aa809afb3f"
+}
