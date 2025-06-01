@@ -1,0 +1,560 @@
+{
+  "active": true,
+  "connections": {
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT 4o": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Refine Text": {
+      "main": [
+        []
+      ]
+    },
+    "Generate HTML": {
+      "main": [
+        [
+          {
+            "node": "Adjust HTML Colors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adjust HTML Colors": {
+      "main": [
+        [
+          {
+            "node": "Send Stock Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trends Analysis Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Technical Analysis Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-05-24T16:11:43.999Z",
+  "id": "gfK74R7bgxVnbRFT",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Advance Stock Analysis (both Technical and Trends)",
+  "nodes": [
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=335458847"
+      },
+      "id": "255f4ba6-656a-466f-ba9c-47ae6526bfda",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        920,
+        360
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ticker = {{ $json[\"Ticker symbol:\"] }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are a specialist AI in stock analysis. When given a stock symbol, you will:\n\n1. Call the “technical_analysis” tool with the symbol to retrieve chart-based metrics.\n2. Call the “trends_analysis” tool with the symbol to retrieve news sentiment.\n3. Combine and interpret both data sets, then generate a JSON report that will populate an HTML template.\n\nYour report must include:\n\n- “stockSymbol”: the input symbol (string).\n- “analysisDate”: today’s date in DD/MM/YYYY format.\n- “recommendationClass”: one of “positive”, “neutral”, or “negative”.\n- “recommendationTitle”: a brief, clear English title for your call-to-action.\n- “recommendationText”: a concise, professional English explanation of your recommendation.\n- “Recommendation”: exactly “Recommend to buy”, “Recommend to wait”, or “Recommend to sell” (see rule 7).\n- “bullishCount”, “neutralCount”, “bearishCount”: integer counts of articles by sentiment.\n- “bullishHeight”, “neutralHeight”, “bearishHeight”: corresponding bar heights in pixels.\n- “overallSentiment”: “Positive”, “Neutral”, or “Negative”.\n- “sentimentScore”: a numeric sentiment score with two decimals.\n- “chartImageUrl”: a URL to the generated chart image.\n- “technicalAnalysis”: three `<p>`-wrapped paragraphs in clear professional English explaining what you did with each indicator (Volume, EMA, RSI, Fibonacci retracement, MACD, Bollinger Bands, support/resistance), so non-experts understand.\n- “topArticles”: an array of up to five objects, each with:\n    - “title”: article title in English\n    - “url”: article URL\n    - “source”: publication name\n    - “date”: DD/MM/YYYY\n    - “sentimentClass”: “bullish” / “neutral” / “bearish”\n    - “sentimentLabel”: one of “Strong Positive”, “Weak Positive”, “Neutral”, “Weak Negative”, “Strong Negative”\n- “hotTopics”: an array of five objects, each with:\n    - “topic”: topic name in English\n    - “article_count”: integer number of articles\n    - “average_relevance”: string score “0.00”–“1.00”\n\nRules:\n\n• Translate any non-English article titles into English before output.  \n• Map all sentiment outputs to exactly one of the five English labels above.  \n• Only “Recommend to buy” or “Recommend to sell” if you’re highly confident; otherwise use “Recommend to wait.”  \n• Use the built-in “think” tool to double-check your final Recommendation against your recommendationText.  \n• Return only the JSON object—no extra text or commentary.\n\nExample output skeleton:\n\n```json\n{\n  \"stockSymbol\": \"AAPL\",\n  \"analysisDate\": \"24/05/2025\",\n  \"recommendationClass\": \"positive\",\n  \"recommendationTitle\": \"Strong Buy Signal\",\n  \"recommendationText\": \"Based on recent volume spikes and a bullish MACD crossover, we expect...\",\n  \"bullishCount\": 3,\n  \"neutralCount\": 1,\n  \"bearishCount\": 1,\n  \"bullishHeight\": 120,\n  \"neutralHeight\":  40,\n  \"bearishHeight\":  30,\n  \"overallSentiment\": \"Positive\",\n  \"Recommendation\": \"Recommend to buy\",\n  \"sentimentScore\": 0.75,\n  \"chartImageUrl\": \"https://...\",\n  \"technicalAnalysis\": \"<p>First, we looked at volume...</p><p>Next, the 50-day EMA...</p><p>Finally, Bollinger Bands are contracting...</p>\",\n  \"topArticles\": [\n    {\n      \"title\": \"Apple Reports Record Earnings\",\n      \"url\": \"https://...\",\n      \"source\": \"Financial Times\",\n      \"date\": \"23/05/2025\",\n      \"sentimentClass\": \"bullish\",\n      \"sentimentLabel\": \"Strong Positive\"\n    }\n    /* up to 5 */\n  ],\n  \"hotTopics\": [\n    { \"topic\": \"iPhone 17 Launch\", \"article_count\": 12, \"average_relevance\": \"0.82\" }\n    /* 5 topics */\n  ]\n}\n"
+        }
+      },
+      "id": "5d6ccc53-e132-409c-bf2a-dfb37d4fa72b",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        860,
+        120
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "content": "# AI Agent\nAI agent powered by GPT-4o that analyses stocks by combining technical analysis and news sentiment, generating detailed reports in Hebrew with data-driven investment recommendations",
+        "height": 580,
+        "width": 1820,
+        "color": 4
+      },
+      "id": "cefb8d56-3c36-4c50-a6c9-fa540156c2b0",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        460,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"stockSymbol\": \"סימול\",\n  \"analysisDate\": \"DD/MM/YYYY\",\n  \"recommendationClass\": \"positive/neutral/negative\",\n  \"recommendationTitle\": \"כותרת המלצה בעברית\",\n  \"recommendationText\": \"הסבר מפורט של ההמלצה בעברית\",\n  \"bullishCount\": 0,\n  \"neutralCount\": 0, \n  \"bearishCount\": 0,\n  \"bullishHeight\": 0,\n  \"neutralHeight\": 0,\n  \"bearishHeight\": 0,\n  \"overallSentiment\": \"חיובי/נייטרלי/שלילי\",\n  \"Recommendation\": \"ממליץ לקנות/ ממליץ לחכות/ ממליץ למכור\",\n  \"sentimentScore\": 0.00,\n  \"chartImageUrl\": \"URL_PLACEHOLDER\",\n  \"technicalAnalysis\": \"ניתוח טכני מפורט בעברית עם תגי <p>\",\n  \"topArticles\": [\n    {\n      \"title\": \"כותרת המאמר\",\n      \"url\": \"כתובת URL של המאמר\",\n      \"source\": \"שם המקור\",\n      \"date\": \"DD/MM/YYYY\",\n      \"sentimentClass\": \"bullish/neutral/bearish\",\n      \"sentimentHebrew\": \"חיובי-חזק/חיובי-חלש/נייטרלי/שלילי-חלש/שלילי-חזק\"\n    }\n  ],\n  \"hotTopics\": [\n    {\n      \"topic\": \"שם הנושא בעברית\",\n      \"article_count\": 0,\n      \"average_relevance\": \"0.00\"\n    }\n  ]\n}"
+      },
+      "id": "3517073a-e04f-4a0c-b9c8-7f5b959ef572",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        1680,
+        360
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "id": "cbc830c8-80f3-4260-a5d4-069e99ed2054",
+      "name": "GPT 4o",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        740,
+        360
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "Mis2TaBEA42h4hCl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html dir=\"ltr\" lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Stock Analysis: {{ $('AI Agent').item.json.output.stockSymbol }}</title>\n</head>\n<body style=\"margin: 0; padding: 0; font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f5f7fa; color: #333; line-height: 1.6; -webkit-font-smoothing: antialiased; font-size: 16px; text-align: left; direction: ltr;\">\n    <!-- Main wrapper -->\n    <div style=\"max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin-top: 30px; margin-bottom: 30px; text-align: left; direction: ltr;\">\n        \n        <!-- Header -->\n        <div style=\"background: linear-gradient(135deg, #0057ff 0%, #00b2ff 100%); padding: 30px 40px; text-align: center; position: relative; overflow: hidden; margin-bottom: 20px;\">\n            <div style=\"position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSgzMCkiPjxwYXRoIGQ9Ik0wIDEwIEw0MCAxMCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjAuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg=='); opacity: 0.2;\"></div>\n            <h1 style=\"color: #ffffff; font-weight: 700; font-size: 28px; margin: 0 0 5px 0; letter-spacing: -0.5px; position: relative;\">Stock Analysis: {{ $('AI Agent').item.json.output.stockSymbol }}</h1>\n            <div style=\"color: rgba(255,255,255,0.85); font-size: 15px; position: relative;\">Date: {{ $('AI Agent').item.json.output.analysisDate }}</div>\n        </div>\n        \n        <!-- Content -->\n        <div style=\"padding: 40px; text-align: left; direction: ltr;\">\n            \n            <!-- Recommendation box -->\n            <div style=\"background-color: #f8fafc; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); padding: 25px; margin-bottom: 40px; position: relative; overflow: hidden; text-align: left;\">\n                <div style=\"position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background-color: #f7b955;\"></div>\n                <div style=\"position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(247, 185, 85, 0.07) 0%, rgba(247, 185, 85, 0) 50%);\"></div>\n                <div style=\"text-align: center; position: relative;\">\n                    <div style=\"display: inline-block; width: 40px; height: 40px; border-radius: 50%; margin-bottom: 10px; background-color: rgba(247, 185, 85, 0.15); text-align: center;\">\n                        <span style=\"font-size: 20px; line-height: 40px;\">⚖️</span>\n                    </div>\n                    <h2 style=\"margin: 0 0 10px 0; color: #f7b955; font-size: 22px; font-weight: 700; text-align: center;\">{{ $('AI Agent').item.json.output.recommendationTitle }}</h2>\n                    <p style=\"margin: 0; font-size: 16px; line-height: 1.6; color: #4a5568; text-align: left;\">{{ $json.message.content.recommendationText }}</p>\n                    <div style=\"margin-top: 25px;\">\n                        <a href=\"#\" style=\"display: inline-block; background-color: #29cc7a; color: white; font-weight: 600; font-size: 16px; padding: 12px 30px; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 6px rgba(41, 204, 122, 0.25); transition: all 0.2s ease;\">{{ $('AI Agent').item.json.output.Recommendation }}</a>\n                    </div>\n                </div>\n            </div>\n\n            <!-- Technical Analysis -->\n            <div style=\"margin-bottom: 40px; text-align: left;\">\n                <h2 style=\"font-size: 20px; color: #1a202c; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; font-weight: 700; text-align: left;\">Technical Analysis</h2>\n                \n                <div style=\"background: #ffffff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; margin-bottom: 25px;\">\n                    <img src=\"{{ $('AI Agent').item.json.output.chartImageUrl }}\" alt=\"Technical Chart {{ $('AI Agent').item.json.output.stockSymbol }}\" style=\"width: 100%; display: block; max-height: 450px; object-fit: contain;\">\n                </div>\n                \n                <div style=\"background-color: #f8fafc; border-radius: 12px; padding: 25px; font-size: 15px; line-height: 1.6; color: #4a5568; text-align: left;\">\n                    {{ $json.message.content.technicalAnalysis }}\n                </div>\n            </div>\n                      \n            <!-- Market Sentiment -->\n            <div style=\"margin-bottom: 40px; text-align: left;\">\n                <h2 style=\"font-size: 20px; color: #1a202c; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; font-weight: 700; text-align: left;\">Market Sentiment Analysis</h2>\n                \n                <!-- Sentiment chart as table -->\n                <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; margin: 45px 0 30px 0;\">\n                    <tr valign=\"bottom\" align=\"center\">\n                        <td width=\"33%\" style=\"text-align: center; padding: 0 10px;\">\n                            <div style=\"font-weight: 600; margin-bottom: 10px; color: #29cc7a;\">{{ $('AI Agent').item.json.output.bullishCount }}</div>\n                            <div style=\"background-color: #29cc7a; border-radius: 8px 8px 0 0; width: 100%; height: {{ $('AI Agent').item.json.output.bullishHeight }}px; margin: 0 auto; opacity: 0.85;\"></div>\n                            <div style=\"font-size: 14px; color: #4a5568; margin-top: 10px;\">Bullish</div>\n                        </td>\n                        <td width=\"33%\" style=\"text-align: center; padding: 0 10px;\">\n                            <div style=\"font-weight: 600; margin-bottom: 10px; color: #f7b955;\">{{ $('AI Agent').item.json.output.neutralCount }}</div>\n                            <div style=\"background-color: #f7b955; border-radius: 8px 8px 0 0; width: 100%; height: {{ $('AI Agent').item.json.output.neutralHeight }}px; margin: 0 auto; opacity: 0.85;\"></div>\n                            <div style=\"font-size: 14px; color: #4a5568; margin-top: 10px;\">Neutral</div>\n                        </td>\n                        <td width=\"33%\" style=\"text-align: center; padding: 0 10px;\">\n                            <div style=\"font-weight: 600; margin-bottom: 10px; color: #f55e5e;\">{{ $('AI Agent').item.json.output.bearishCount }}</div>\n                            <div style=\"background-color: #f55e5e; border-radius: 8px 8px 0 0; width: 100%; height: {{ $('AI Agent').item.json.output.bearishHeight }}px; margin: 0 auto; opacity: 0.85;\"></div>\n                            <div style=\"font-size: 14px; color: #4a5568; margin-top: 10px;\">Bearish</div>\n                        </td>\n                    </tr>\n                </table>\n                \n                <div style=\"background-color: #f8fafc; border-radius: 10px; padding: 15px; text-align: center; font-size: 15px;\">\n                    Overall sentiment for <strong>{{ $('AI Agent').item.json.output.stockSymbol }}</strong> is \n                    <span style=\"font-weight: 600; color: #f7b955;\">{{ $('AI Agent').item.json.output.overallSentiment }}</span> \n                    with a score of <strong>{{ $('AI Agent').item.json.output.sentimentScore }}</strong>.\n                </div>\n            </div>\n            \n            <!-- Top Articles -->\n            <div style=\"margin-bottom: 40px; text-align: left;\">\n                <h2 style=\"font-size: 20px; color: #1a202c; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; font-weight: 700; text-align: left;\">Top Influential Articles</h2>\n                \n                <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse;\">\n                    <!-- Article 1 -->\n                    <tr>\n                        <td style=\"padding-bottom: 16px;\">\n                            <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; background-color: #f8fafc; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;\">\n                                <tr>\n                                    <td width=\"4\" style=\"background-color: #f7b955;\"></td>\n                                    <td style=\"padding: 18px 22px;\">\n                                        <h3 style=\"margin: 0 0 8px 0; font-size: 16px; font-weight: 600; line-height: 1.4; text-align: left;\">\n                                            <a href=\"{{ $('AI Agent').item.json.output.topArticles[0].url }}\" target=\"_blank\" style=\"color: #2b6cb0; text-decoration: none;\">{{ $('AI Agent').item.json.output.topArticles[0].title }}</a>\n                                        </h3>\n                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; margin-top: 10px;\">\n                                            <tr>\n                                                <td style=\"font-size: 13px; color: #718096; text-align: left;\">{{ $('AI Agent').item.json.output.topArticles[0].source }} | {{ $('AI Agent').item.json.output.topArticles[0].date }}</td>\n                                                <td style=\"text-align: right;\">\n                                                    <div style=\"display: inline-block; padding: 3px 10px; border-radius: 30px; font-weight: 500; font-size: 12px; background-color: rgba(247, 185, 85, 0.1); color: #f7b955;\">\n                                                        {{ $('AI Agent').item.json.output.topArticles[0].sentimentHebrew }}\n                                                    </div>\n                                                </td>\n                                            </tr>\n                                        </table>\n                                    </td>\n                                </tr>\n                            </table>\n                        </td>\n                    </tr>\n                    \n                    <!-- Article 2 -->\n                    <tr>\n                        <td style=\"padding-bottom: 16px;\">\n                            <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; background-color: #f8fafc; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;\">\n                                <tr>\n                                    <td width=\"4\" style=\"background-color: #f7b955;\"></td>\n                                    <td style=\"padding: 18px 22px;\">\n                                        <h3 style=\"margin: 0 0 8px 0; font-size: 16px; font-weight: 600; line-height: 1.4; text-align: left;\">\n                                            <a href=\"{{ $('AI Agent').item.json.output.topArticles[1].url }}\" target=\"_blank\" style=\"color: #2b6cb0; text-decoration: none;\">{{ $('AI Agent').item.json.output.topArticles[1].title }}</a>\n                                        </h3>\n                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; margin-top: 10px;\">\n                                            <tr>\n                                                <td style=\"font-size: 13px; color: #718096; text-align: left;\">{{ $('AI Agent').item.json.output.topArticles[1].source }} | {{ $('AI Agent').item.json.output.topArticles[1].date }}</td>\n                                                <td style=\"text-align: right;\">\n                                                    <div style=\"display: inline-block; padding: 3px 10px; border-radius: 30px; font-weight: 500; font-size: 12px; background-color: rgba(247, 185, 85, 0.1); color: #f7b955;\">\n                                                        {{ $('AI Agent').item.json.output.topArticles[1].sentimentHebrew }}\n                                                    </div>\n                                                </td>\n                                            </tr>\n                                        </table>\n                                    </td>\n                                </tr>\n                            </table>\n                        </td>\n                    </tr>\n                    \n                    <!-- Article 3 -->\n                    <tr>\n                        <td style=\"padding-bottom: 16px;\">\n                            <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; background-color: #f8fafc; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;\">\n                                <tr>\n                                    <td width=\"4\" style=\"background-color: #f7b955;\"></td>\n                                    <td style=\"padding: 18px 22px;\">\n                                        <h3 style=\"margin: 0 0 8px 0; font-size: 16px; font-weight: 600; line-height: 1.4; text-align: left;\">\n                                            <a href=\"{{ $('AI Agent').item.json.output.topArticles[2].url }}\" target=\"_blank\" style=\"color: #2b6cb0; text-decoration: none;\">{{ $('AI Agent').item.json.output.topArticles[2].title }}</a>\n                                        </h3>\n                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; margin-top: 10px;\">\n                                            <tr>\n                                                <td style=\"font-size: 13px; color: #718096; text-align: left;\">{{ $('AI Agent').item.json.output.topArticles[2].source }} | {{ $('AI Agent').item.json.output.topArticles[2].date }}</td>\n                                                <td style=\"text-align: right;\">\n                                                    <div style=\"display: inline-block; padding: 3px 10px; border-radius: 30px; font-weight: 500; font-size: 12px; background-color: rgba(247, 185, 85, 0.1); color: #f7b955;\">\n                                                        {{ $('AI Agent').item.json.output.topArticles[2].sentimentHebrew }}\n                                                    </div>\n                                                </td>\n                                            </tr>\n                                        </table>\n                                    </td>\n                                </tr>\n                            </table>\n                        </td>\n                    </tr>\n                    \n                    <!-- Article 4 -->\n                    <tr>\n                        <td style=\"padding-bottom: 16px;\">\n                            <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; background-color: #f8fafc; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;\">\n                                <tr>\n                                    <td width=\"4\" style=\"background-color: #f7b955;\"></td>\n                                    <td style=\"padding: 18px 22px;\">\n                                        <h3 style=\"margin: 0 0 8px 0; font-size: 16px; font-weight: 600; line-height: 1.4; text-align: left;\">\n                                            <a href=\"{{ $('AI Agent').item.json.output.topArticles[3].url }}\" target=\"_blank\" style=\"color: #2b6cb0; text-decoration: none;\">{{ $('AI Agent').item.json.output.topArticles[3].title }}</a>\n                                        </h3>\n                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; margin-top: 10px;\">\n                                            <tr>\n                                                <td style=\"font-size: 13px; color: #718096; text-align: left;\">{{ $('AI Agent').item.json.output.topArticles[3].source }} | {{ $('AI Agent').item.json.output.topArticles[3].date }}</td>\n                                                <td style=\"text-align: right;\">\n                                                    <div style=\"display: inline-block; padding: 3px 10px; border-radius: 30px; font-weight: 500; font-size: 12px; background-color: rgba(247, 185, 85, 0.1); color: #f7b955;\">\n                                                        {{ $('AI Agent').item.json.output.topArticles[3].sentimentHebrew }}\n                                                    </div>\n                                                </td>\n                                            </tr>\n                                        </table>\n                                    </td>\n                                </tr>\n                            </table>\n                        </td>\n                    </tr>\n                    \n                    <!-- Article 5 -->\n                    <tr>\n                        <td style=\"padding-bottom: 16px;\">\n                            <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; background-color: #f8fafc; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;\">\n                                <tr>\n                                    <td width=\"4\" style=\"background-color: #f7b955;\"></td>\n                                    <td style=\"padding: 18px 22px;\">\n                                        <h3 style=\"margin: 0 0 8px 0; font-size: 16px; font-weight: 600; line-height: 1.4; text-align: left;\">\n                                            <a href=\"{{ $('AI Agent').item.json.output.topArticles[4].url }}\" target=\"_blank\" style=\"color: #2b6cb0; text-decoration: none;\">{{ $('AI Agent').item.json.output.topArticles[4].title }}</a>\n                                        </h3>\n                                        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse: collapse; margin-top: 10px;\">\n                                            <tr>\n                                                <td style=\"font-size: 13px; color: #718096; text-align: left;\">{{ $('AI Agent').item.json.output.topArticles[4].source }} | {{ $('AI Agent').item.json.output.topArticles[4].date }}</td>\n                                                <td style=\"text-align: right;\">\n                                                    <div style=\"display: inline-block; padding: 3px 10px; border-radius: 30px; font-weight: 500; font-size: 12px; background-color: rgba(247, 185, 85, 0.1); color: #f7b955;\">\n                                                        {{ $('AI Agent').item.json.output.topArticles[4].sentimentHebrew }}\n                                                    </div>\n                                                </td>\n                                            </tr>\n                                        </table>\n                                    </td>\n                                </tr>\n                            </table>\n                        </td>\n                    </tr>\n                </table>\n            </div>\n              \n            <!-- Hot Topics -->\n            <div style=\"margin-bottom: 30px; text-align: left;\">\n                <h2 style=\"font-size: 20px; color: #1a202c; margin: 0 0 20px 0; padding-bottom: 12px; border-bottom: 1px solid #edf2f7; font-weight: 700; text-align: left;\">Hot Topics</h2>\n                \n                <div style=\"background-color: #f8fafc; border-radius: 12px; padding: 20px 25px; text-align: left;\">\n                    <p style=\"margin: 0 0 15px 0; font-size: 15px; color: #4a5568; text-align: left;\">Key themes in the news for {{ $('AI Agent').item.json.output.stockSymbol }}:</p>\n                    \n                    <!-- Topic 1 -->\n                    <div style=\"margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #edf2f7;\">\n                        <div style=\"display: table; width: 100%; margin-bottom: 8px;\">\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: left; font-weight: 600; font-size: 15px;\">\n                                {{ $('AI Agent').item.json.output.hotTopics[0].topic }}\n                            </div>\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: right; white-space: nowrap;\">\n                                <div style=\"display: inline-block; background-color: #edf2f7; border-radius: 30px; padding: 4px 12px; font-size: 13px; color: #4a5568; text-align: center;\">\n                                    <strong>{{ $('AI Agent').item.json.output.hotTopics[0].article_count }}</strong> articles\n                                </div>\n                            </div>\n                        </div>\n                        <div style=\"background-color: #e2e8f0; height: 4px; width: 100%; border-radius: 2px; overflow: hidden;\">\n                            <div style=\"background-color: #4299e1; height: 100%; width: calc({{ $('AI Agent').item.json.output.hotTopics[0].average_relevance }} * 100%);\"></div>\n                        </div>\n                        <div style=\"text-align: right; font-size: 12px; color: #718096; margin-top: 4px;\">Relevance: {{ $('AI Agent').item.json.output.hotTopics[0].average_relevance }}</div>\n                    </div>\n                    \n                    <!-- Topic 2 -->\n                    <div style=\"margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #edf2f7;\">\n                        <div style=\"display: table; width: 100%; margin-bottom: 8px;\">\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: left; font-weight: 600; font-size: 15px;\">\n                                {{ $('AI Agent').item.json.output.hotTopics[1].topic }}\n                            </div>\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: right; white-space: nowrap;\">\n                                <div style=\"display: inline-block; background-color: #edf2f7; border-radius: 30px; padding: 4px 12px; font-size: 13px; color: #4a5568; text-align: center;\">\n                                    <strong>{{ $('AI Agent').item.json.output.hotTopics[1].article_count }}</strong> articles\n                                </div>\n                            </div>\n                        </div>\n                        <div style=\"background-color: #e2e8f0; height: 4px; width: 100%; border-radius: 2px; overflow: hidden;\">\n                            <div style=\"background-color: #4299e1; height: 100%; width: calc({{ $('AI Agent').item.json.output.hotTopics[1].average_relevance }} * 100%);\"></div>\n                        </div>\n                        <div style=\"text-align: right; font-size: 12px; color: #718096; margin-top: 4px;\">Relevance: {{ $('AI Agent').item.json.output.hotTopics[1].average_relevance }}</div>\n                    </div>\n                    \n                    <!-- Topic 3 -->\n                    <div style=\"margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #edf2f7;\">\n                        <div style=\"display: table; width: 100%; margin-bottom: 8px;\">\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: left; font-weight: 600; font-size: 15px;\">\n                                {{ $('AI Agent').item.json.output.hotTopics[2].topic }}\n                            </div>\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: right; white-space: nowrap;\">\n                                <div style=\"display: inline-block; background-color: #edf2f7; border-radius: 30px; padding: 4px 12px; font-size: 13px; color: #4a5568; text-align: center;\">\n                                    <strong>{{ $('AI Agent').item.json.output.hotTopics[2].article_count }}</strong> articles\n                                </div>\n                            </div>\n                        </div>\n                        <div style=\"background-color: #e2e8f0; height: 4px; width: 100%; border-radius: 2px; overflow: hidden;\">\n                            <div style=\"background-color: #4299e1; height: 100%; width: calc({{ $('AI Agent').item.json.output.hotTopics[2].average_relevance }} * 100%);\"></div>\n                        </div>\n                        <div style=\"text-align: right; font-size: 12px; color: #718096; margin-top: 4px;\">Relevance: {{ $('AI Agent').item.json.output.hotTopics[2].average_relevance }}</div>\n                    </div>\n                    \n                    <!-- Topic 4 -->\n                    <div style=\"margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #edf2f7;\">\n                        <div style=\"display: table; width: 100%; margin-bottom: 8px;\">\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: left; font-weight: 600; font-size: 15px;\">\n                                {{ $('AI Agent').item.json.output.hotTopics[3].topic }}\n                            </div>\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: right; white-space: nowrap;\">\n                                <div style=\"display: inline-block; background-color: #edf2f7; border-radius: 30px; padding: 4px 12px; font-size: 13px; color: #4a5568; text-align: center;\">\n                                    <strong>{{ $('AI Agent').item.json.output.hotTopics[3].article_count }}</strong> articles\n                                </div>\n                            </div>\n                        </div>\n                        <div style=\"background-color: #e2e8f0; height: 4px; width: 100%; border-radius: 2px; overflow: hidden;\">\n                            <div style=\"background-color: #4299e1; height: 100%; width: calc({{ $('AI Agent').item.json.output.hotTopics[3].average_relevance }} * 100%);\"></div>\n                        </div>\n                        <div style=\"text-align: right; font-size: 12px; color: #718096; margin-top: 4px;\">Relevance: {{ $('AI Agent').item.json.output.hotTopics[3].average_relevance }}</div>\n                    </div>\n                    \n                    <!-- Topic 5 -->\n                    <div style=\"margin-bottom: 0;\">\n                        <div style=\"display: table; width: 100%; margin-bottom: 8px;\">\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: left; font-weight: 600; font-size: 15px;\">\n                                {{ $('AI Agent').item.json.output.hotTopics[4].topic }}\n                            </div>\n                            <div style=\"display: table-cell; vertical-align: middle; text-align: right; white-space: nowrap;\">\n                                <div style=\"display: inline-block; background-color: #edf2f7; border-radius: 30px; padding: 4px 12px; font-size: 13px; color: #4a5568; text-align: center;\">\n                                    <strong>{{ $('AI Agent').item.json.output.hotTopics[4].article_count }}</strong> articles\n                                </div>\n                            </div>\n                        </div>\n                        <div style=\"background-color: #e2e8f0; height: 4px; width: 100%; border-radius: 2px; overflow: hidden;\">\n                            <div style=\"background-color: #4299e1; height: 100%; width: calc({{ $('AI Agent').item.json.output.hotTopics[4].average_relevance }} * 100%);\"></div>\n                        </div>\n                        <div style=\"text-align: right; font-size: 12px; color: #718096; margin-top: 4px;\">Relevance: {{ $('AI Agent').item.json.output.hotTopics[4].average_relevance }}</div>\n                    </div>\n                </div>\n            </div>\n\t        \n        </div>\n\n        <!-- Footer -->\n        <div style=\"background-color: #f8fafc; padding: 25px 40px; text-align: center; border-top: 1px solid #edf2f7;\">\n            <div style=\"font-size: 13px; color: #718096; line-height: 1.6;\">\n                <p style=\"margin: 0 0 8px 0;\">This report is generated automatically and does not constitute investment advice.</p>\n                <p style=\"margin: 0;\">Please consult a licensed financial advisor before making any investment decisions.</p>\n            </div>\n            <div style=\"margin-top: 20px;\">\n                Built with ❤️ by <a href=\"https://www.linkedin.com/in/wanghley\" style=\"display: inline-block; text-decoration: none;\">Wanghley</a>\n            </div>\n        </div>\n\n    </div>\n</body>\n</html>"
+      },
+      "id": "bc5c92fc-b92b-4150-a05d-c030e118bb5a",
+      "name": "Generate HTML",
+      "type": "n8n-nodes-base.html",
+      "position": [
+        1640,
+        120
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "fromEmail": "annoNAS <noreply@wanghley.com>",
+        "toEmail": "={{ $('On form submission').item.json[\"Email:\"] }}",
+        "subject": "=Stock Analysis for {{ $('AI Agent').item.json.output.stockSymbol }}: {{ $('AI Agent').item.json.output.analysisDate }}",
+        "html": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "2b6ce7fb-5ab9-47d2-8d7a-c8ad73acfcb9",
+      "name": "Send Stock Analysis",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [
+        2060,
+        120
+      ],
+      "webhookId": "0de4d8cd-3519-4a4a-a05b-a9c973b64141",
+      "executeOnce": false,
+      "typeVersion": 2.1,
+      "credentials": {
+        "smtp": {
+          "id": "k5WKDqvMjCnHSUOK",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// New function to remove topics with only one article - ultra-simple approach\nfunction removeSingleArticleTopics(html) {\n  // First, see if there are any topics with exactly 1 article\n  if (!html.includes('<strong>1</strong> מאמרים')) {\n    console.log('No topics with 1 article found');\n    return html;\n  }\n\n  // Find each line that contains the \"נושא\" comment\n  // and check if it has exactly 1 article mentioned\n  const lines = html.split('\\n');\n  const linesToRemove = [];\n\n  // For each line containing \"1 מאמרים\", find the topic it belongs to\n  for (let i = 0; i < lines.length; i++) {\n    if (lines[i].includes('<strong>1</strong> מאמרים')) {\n      console.log(`Found line ${i} with 1 article mention`);\n      \n      // Go back to find the start of this topic\n      let startLine = -1;\n      for (let j = i; j >= 0; j--) {\n        if (lines[j].includes('<!-- נושא') || \n            lines[j].includes('<div style=\"margin-bottom: 15px; padding-bottom: 15px; border-bottom:')) {\n          startLine = j;\n          break;\n        }\n      }\n      \n      if (startLine === -1) {\n        console.log(`Couldn't find start of topic for line ${i}`);\n        continue;\n      }\n      \n      // Go forward to find the end of this topic\n      let endLine = -1;\n      let divCount = 0;\n      for (let j = startLine; j < lines.length; j++) {\n        // Count opening divs\n        const openMatches = lines[j].match(/<div/g);\n        if (openMatches) {\n          divCount += openMatches.length;\n        }\n        \n        // Count closing divs\n        const closeMatches = lines[j].match(/<\\/div>/g);\n        if (closeMatches) {\n          divCount -= closeMatches.length;\n        }\n        \n        // When divCount returns to 0, we've found the end\n        if (divCount === 0 && j > startLine) {\n          endLine = j;\n          break;\n        }\n      }\n      \n      if (endLine === -1) {\n        console.log(`Couldn't find end of topic for line ${i}`);\n        continue;\n      }\n      \n      // Now we have the start and end lines of the topic\n      console.log(`Found topic from line ${startLine} to ${endLine}`);\n      \n      // Mark these lines for removal\n      for (let j = startLine; j <= endLine; j++) {\n        linesToRemove.push(j);\n      }\n    }\n  }\n  \n  // Remove the marked lines\n  const newLines = [];\n  for (let i = 0; i < lines.length; i++) {\n    if (!linesToRemove.includes(i)) {\n      newLines.push(lines[i]);\n    }\n  }\n  \n  console.log(`Removed ${linesToRemove.length} lines in total`);\n  return newLines.join('\\n');\n}// Code for updating colors according to sentiment - for n8n\n\n// Define colors by sentiment type\nconst colors = {\n  positive: {\n    main: '#29cc7a',          // Green\n    background: 'rgba(41, 204, 122, 0.15)',\n    gradient: 'rgba(41, 204, 122, 0.07)',\n    accent: 'rgba(41, 204, 122, 0.1)'\n  },\n  neutral: {\n    main: '#f7b955',          // Orange\n    background: 'rgba(247, 185, 85, 0.15)',\n    gradient: 'rgba(247, 185, 85, 0.07)',\n    accent: 'rgba(247, 185, 85, 0.1)'\n  },\n  negative: {\n    main: '#f55e5e',          // Red\n    background: 'rgba(245, 94, 94, 0.15)',\n    gradient: 'rgba(245, 94, 94, 0.07)',\n    accent: 'rgba(245, 94, 94, 0.1)'\n  }\n};\n\n// Function to identify sentiment type from text\nfunction getSentimentType(text) {\n  if (!text) return 'neutral';\n  \n  const lowerText = text.toLowerCase();\n  \n  // Negative keywords - check first because there are expressions with both \"positive\" and \"negative\" together\n  if (lowerText.includes('שלילי') || lowerText.includes('negative') || \n      lowerText.includes('bearish') || lowerText.includes('ירידה') || \n      lowerText.includes('דובי') || lowerText.includes('מכירה') || \n      lowerText.includes('שלילי-חזק') || lowerText.includes('שלילי-חלש') ||\n      lowerText.includes('שלילית')) {\n    return 'negative';\n  }\n  \n  // Positive keywords\n  if (lowerText.includes('חיובי') || lowerText.includes('positive') || \n      lowerText.includes('bullish') || lowerText.includes('עלייה') || \n      lowerText.includes('שורי') || lowerText.includes('קנייה') || \n      lowerText.includes('חיובי-חזק') || lowerText.includes('חיובי-חלש') ||\n      lowerText.includes('חיובית')) {\n    return 'positive';\n  }\n  \n  // Additional check for expressions containing only \"strong\" or \"weak\"\n  if (lowerText.includes('חזק')) {\n    // If no negative word, assume it's positive\n    return 'positive';\n  }\n  \n  // Default - neutral\n  return 'neutral';\n}\n\n// Function to check if a specific text belongs to a sentiment - used for bug fixing\nfunction debugSentiment(text) {\n  console.log(`Sentiment check: \"${text}\" => ${getSentimentType(text)}`);\n}\n\n// New function to remove undefined articles from HTML\nfunction removeUndefinedArticles(html) {\n  // Find all article blocks\n  const articleBlocksRegex = /<tr>\\s*<td style=\"padding-bottom: 16px;\">\\s*<table[^>]*>[\\s\\S]*?<\\/table>\\s*<\\/td>\\s*<\\/tr>/g;\n  const articleBlocks = Array.from(html.matchAll(articleBlocksRegex));\n  \n  // No articles found\n  if (!articleBlocks || articleBlocks.length === 0) {\n    console.log(\"No article blocks found\");\n    return html;\n  }\n  \n  // Function to check if an article is fully undefined\n  function isFullyUndefinedArticle(articleHtml) {\n    // An article is considered fully undefined if:\n    // 1. It has href=\"undefined\"\n    // 2. It has link text that is \"undefined\"\n    // 3. It has \"undefined | undefined\" (source and date)\n    return articleHtml.includes('href=\"undefined\"') && \n           articleHtml.includes('>undefined</a>') &&\n           articleHtml.includes('undefined | undefined');\n  }\n  \n  // Identify blocks to remove\n  const blocksToRemove = [];\n  for (const match of articleBlocks) {\n    const block = match[0];\n    if (isFullyUndefinedArticle(block)) {\n      console.log(\"Found undefined article, will remove\");\n      blocksToRemove.push(match);\n    } else {\n      console.log(\"Found valid article, keeping it\");\n    }\n  }\n  \n  // If no blocks to remove, return original HTML\n  if (blocksToRemove.length === 0) {\n    console.log(\"No undefined articles found to remove\");\n    return html;\n  }\n  \n  console.log(`Found ${blocksToRemove.length} undefined articles to remove`);\n  \n  // Create a new string by removing the matches from end to start (to avoid index shifting)\n  let cleanedHtml = html;\n  for (let i = blocksToRemove.length - 1; i >= 0; i--) {\n    const match = blocksToRemove[i];\n    cleanedHtml = cleanedHtml.slice(0, match.index) + cleanedHtml.slice(match.index + match[0].length);\n  }\n  \n  return cleanedHtml;\n}\n\n// Get the HTML from the specified parameter\nconst html = $input.first().json.html;\nlet updatedHtml = html;\n\n// Bug checks - check several keywords\ndebugSentiment(\"חיובי\");\ndebugSentiment(\"שלילי\");\ndebugSentiment(\"נייטרלי\");\ndebugSentiment(\"חיובי-חזק\");\ndebugSentiment(\"שלילי-חזק\");\ndebugSentiment(\"חיובי-חלש\");\ndebugSentiment(\"שלילי-חלש\");\n\n// 1. Update colors in the recommendation title\nconst titleMatch = html.match(/<h2 style=\"[^\"]*color: #[a-f0-9]+;[^\"]*\">([^<]+)<\\/h2>/i);\nif (titleMatch) {\n  const titleText = titleMatch[1].trim();\n  const titleSentiment = getSentimentType(titleText);\n  \n  // Update title color\n  updatedHtml = updatedHtml.replace(\n    /(<h2 style=\"[^\"]*color: )#[a-f0-9]+(;[^\"]*\">)/i,\n    `$1${colors[titleSentiment].main}$2`\n  );\n  \n  // Update side bar color\n  updatedHtml = updatedHtml.replace(\n    /(<div style=\"position: absolute; right: 0; top: 0; bottom: 0; width: 6px; background-color: )#[a-f0-9]+(;\"><\\/div>)/i,\n    `$1${colors[titleSentiment].main}$2`\n  );\n  \n  // Update gradient color\n  updatedHtml = updatedHtml.replace(\n    /(<div style=\"position: absolute; right: 0; top: 0; width: 100%; height: 100%; background: linear-gradient\\(90deg, )rgba\\([^)]+\\)( 0%, )rgba\\([^)]+\\)( 50%\\);\"><\\/div>)/i,\n    `$1${colors[titleSentiment].gradient}$2${colors[titleSentiment].gradient.replace('0.07', '0')}$3`\n  );\n  \n  // Update icon background color\n  updatedHtml = updatedHtml.replace(\n    /(<div style=\"display: inline-block; width: 40px; height: 40px; border-radius: 50%; margin-bottom: 10px; background-color: )rgba\\([^)]+\\)(; text-align: center;\">)/i,\n    `$1${colors[titleSentiment].background}$2`\n  );\n}\n\n// 2. Update overall sentiment color\nconst sentimentMatch = updatedHtml.match(/<span style=\"[^\"]*font-weight: 600; color: #[a-f0-9]+;[^\"]*\">([^<]+)<\\/span>/i);\nif (sentimentMatch) {\n  const sentimentText = sentimentMatch[1].trim();\n  const sentimentType = getSentimentType(sentimentText);\n  \n  updatedHtml = updatedHtml.replace(\n    /(<span style=\"[^\"]*font-weight: 600; color: )#[a-f0-9]+(;[^\"]*\">)/i,\n    `$1${colors[sentimentType].main}$2`\n  );\n}\n\n// 3. Update article colors\nconst articleBlocks = updatedHtml.match(/<tr>\\s*<td style=\"padding-bottom: 16px;\">\\s*<table[^>]*>[\\s\\S]*?<\\/table>\\s*<\\/td>\\s*<\\/tr>/g);\nif (articleBlocks) {\n  for (const block of articleBlocks) {\n    // Check if this is a fully undefined article before skipping\n    const isUndefined = block.includes('href=\"undefined\"') && \n                        block.includes('>undefined</a>') && \n                        block.includes('undefined | undefined');\n    \n    // Skip if this is a completely undefined article\n    if (isUndefined) {\n      console.log(\"Skipping color update for undefined article\");\n      continue;\n    }\n    \n    // Find sentiment within the block\n    const articleSentimentMatch = block.match(/<div style=\"[^\"]*padding: 3px 10px;[^\"]*\">([^<]+)<\\/div>/i);\n    if (articleSentimentMatch) {\n      const articleSentimentText = articleSentimentMatch[1].trim();\n      const articleSentimentType = getSentimentType(articleSentimentText);\n      \n      // Debug check - log the identified sentiment\n      debugSentiment(articleSentimentText);\n      \n      // Create updated block\n      let updatedBlock = block;\n      \n      // Update side line color\n      updatedBlock = updatedBlock.replace(\n        /(<td width=\"4\" style=\"background-color: )#[a-f0-9]+(;\"><\\/td>)/i,\n        `$1${colors[articleSentimentType].main}$2`\n      );\n      \n      // Update sentiment tag colors (background and text color)\n      updatedBlock = updatedBlock.replace(\n        /(<div style=\"[^\"]*background-color: )rgba\\([^)]+\\)(; color: )#[a-f0-9]+(;[^\"]*\">)/i,\n        `$1${colors[articleSentimentType].accent}$2${colors[articleSentimentType].main}$3`\n      );\n      \n      // Replace the block with its updated version\n      updatedHtml = updatedHtml.replace(block, updatedBlock);\n    }\n  }\n}\n\n// 4. Update recommendation button color\nconst buttonMatch = updatedHtml.match(/<a style=\"[^\"]*background-color: #[a-f0-9]+;[^\"]*\">([^<]+)<\\/a>/i);\nif (buttonMatch) {\n  const buttonText = buttonMatch[1].trim();\n  let buttonSentiment = 'neutral'; // Default\n  \n  // Determine sentiment based on button text\n  if (buttonText.includes(\"ממליץ לקנות\")) {\n    buttonSentiment = 'positive';\n  } else if (buttonText.includes(\"ממליץ למכור\")) {\n    buttonSentiment = 'negative';\n  } else if (buttonText.includes(\"ממליץ לחכות\")) {\n    buttonSentiment = 'neutral';\n  }\n  \n  // Update button background color\n  updatedHtml = updatedHtml.replace(\n    /(<a style=\"[^\"]*background-color: )#[a-f0-9]+(;[^\"]*\">)/i,\n    `$1${colors[buttonSentiment].main}$2`\n  );\n  \n  // Update box-shadow color\n  const boxShadowRgba = `rgba(${parseInt(colors[buttonSentiment].main.substring(1, 3), 16)}, ${parseInt(colors[buttonSentiment].main.substring(3, 5), 16)}, ${parseInt(colors[buttonSentiment].main.substring(5, 7), 16)}, 0.25)`;\n  updatedHtml = updatedHtml.replace(\n    /(box-shadow: 0 4px 6px )rgba\\([^)]+\\)(;[^\"]*\">)/i,\n    `$1${boxShadowRgba}$2`\n  );\n}\n\n// 5. Remove undefined articles\nupdatedHtml = removeUndefinedArticles(updatedHtml);\n\n// 6. Remove topics with only one article\nupdatedHtml = removeSingleArticleTopics(updatedHtml);\n\n// Return updated HTML\nreturn { html: updatedHtml };"
+      },
+      "id": "8e87b4ac-0916-4b0b-9dc3-30014ebb7a6b",
+      "name": "Adjust HTML Colors",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1860,
+        120
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {},
+      "id": "33cdc518-2b30-4595-9da2-4bf9f91f8fa0",
+      "name": "Think",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "position": [
+        1460,
+        360
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Replace OpenAI Credentials",
+        "height": 80,
+        "width": 160,
+        "color": 3
+      },
+      "id": "38557790-5623-4f66-8062-080266bc5215",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        480
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "name": "technical_analysis",
+        "description": "Call this tool to get an analysis of a requested stock. It'll be obligatory to pass ticker.",
+        "workflowId": {
+          "__rl": true,
+          "value": "LLrBD2VSDaCgS3Au",
+          "mode": "list",
+          "cachedResultName": "Financial Technical Analysis Tool"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ticker": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ticker', ``, 'string') }}",
+            "chart_style": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('chart_style', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ticker",
+              "displayName": "ticker",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "chart_style",
+              "displayName": "chart_style",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "id": "dd2a1a91-344a-440a-9220-91e900af6425",
+      "name": "Technical Analysis Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1140,
+        360
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "name": "trends_analysis",
+        "description": "Call this tool to get an analysis of a requested stock. It'll be obligatory to pass ticker.",
+        "workflowId": {
+          "__rl": true,
+          "value": "SK03cfWblB49itAL",
+          "mode": "list",
+          "cachedResultName": "Stock Trends Analysis Tool"
+        },
+        "workflowInputs": {
+          "value": {
+            "ticker": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ticker', ``, 'string') }}"
+          },
+          "schema": [
+            {
+              "id": "ticker",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "ticker",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "chart_style",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "required": false,
+              "displayName": "chart_style",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "id": "07330af5-a965-492d-985f-f4dd2910bea0",
+      "name": "Trends Analysis Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1300,
+        360
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "content": "### Replace SMTP Credentials",
+        "height": 80,
+        "width": 160,
+        "color": 3
+      },
+      "id": "8525bfd9-e93b-473d-906e-33e06596f4d2",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2060,
+        280
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# Advance Stock Analysis (both Technical and Trends) Using GPT4o Powered AI Agent\n\n## Built by  [Elay Guez](https://www.linkedin.com/in/elay-g)",
+        "height": 300,
+        "width": 440,
+        "color": 7
+      },
+      "id": "a15e3b3e-db16-408e-b3d7-92020444af0b",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Overview ###\n\nGet comprehensive stock analysis with this AI-powered workflow that provides actionable insights for your investment decisions. On a weekly basis, this workflow:\n\n- Analyzes stock data from multiple sources (Chart-img, Twelve Data API, Alphavantage)\n- Performs technical analysis using advanced indicators (RSI, MACD, Bollinger Bands, Resistance and Support Levels)\n- Scans financial news from Alpha Vantage to capture market sentiment\n- Uses OpenAI's GPT-4o to identify patterns, trends, and trading opportunities\n- Generates a fully styled, responsive HTML email (with proper RTL layout) in Hebrew\n- Sends detailed recommendations directly to your inbox\n\n**Perfect for investors, traders, and financial analysts who want data-driven stock insights - combining technical indicators with news sentiment for more informed decisions.**\n\n### Setup Instructions ###\n\n**Estimated setup time:**\n- 15 minutes\n\n**Required credentials:**\n- OpenAI API Key\n- Chart-img API Key (free tier)\n- Twelve Data API Key (free tier)\n- Alpha Vantage API Key (free tier)\n- SMTP credentials (for email delivery)\n\n**Steps:**\n\n1. Import this template into your n8n instance.\n2. Add your API keys under credentials.\n3. Configure the SMTP Email node with: Host (e.g., smtp.gmail.com), Port (465 or 587), Username (your email), Password (app-specific password or login).\n4. Activate the workflow.\n5. Fill in the Form.\n6. **Enjoy!** (Check your Spam mailbox)\n\n### Important Note: ###\nThis report is being generated automatically and does not constitute an investment recommendation. **Please consult a licensed investment advisor before making any investment decisions.**",
+        "height": 1200,
+        "width": 440,
+        "color": 7
+      },
+      "id": "0e4090f8-0270-4bf0-98c7-8a3219204bae",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        320
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "formTitle": "Advance Stock Analysis",
+        "formDescription": "Please enter the company’s NASDAQ ticker symbol (e.g. AAPL) to get a weekly email with combined technical-and-news sentiment analysis from our AI agent",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Ticker symbol:",
+              "placeholder": "TSLA",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email:",
+              "fieldType": "email",
+              "placeholder": "youremail@gmail.com",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "appendAttribution": true,
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Success! Check your inbox (or spam folder) for your analysis report."
+            }
+          }
+        }
+      },
+      "id": "7d8e941e-a3f9-4e05-ac0d-2538783274d9",
+      "name": "On form submission",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [
+        500,
+        120
+      ],
+      "webhookId": "79520027-d875-4ca3-a533-614bfca5e5b1",
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=\"technicalAnalysis\": {{ $json.output.technicalAnalysis }}"
+            },
+            {
+              "content": "=\"recommendationText\":  {{ $json.output.recommendationText }}"
+            },
+            {
+              "content": "When analyzing a stock, ensure that the text in the \"recommendationText\" and \"technicalAnalysis\" fields of the JSON is written in clear, professional English, as expected from a financial analyst. Use precise financial terminology, accurate explanations of market trends, and actionable insights. The content should be insightful and easy to understand for both experienced investors and those new to the market.\n\nReturn the same JSON format, but rewrite the content of \"recommendationText\" and \"technicalAnalysis\" with well-structured, formal language and proper English grammar. Avoid vague or informal expressions. Ensure clarity and accuracy in the analysis.",
+              "role": "system"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "id": "5de996ca-9d00-4cdb-b770-c0cc34d60eaf",
+      "name": "Refine Text",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        1280,
+        -140
+      ],
+      "typeVersion": 1.8,
+      "credentials": {
+        "openAiApi": {
+          "id": "Mis2TaBEA42h4hCl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek-r1-distill-llama-70b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        600,
+        340
+      ],
+      "id": "2e550208-6272-410f-b6c4-1a61e42ba85e",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "wiJyJHFYEjrlnfDv",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-automations",
+  "repo_owner": "wanghley",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-05-26T02:20:53.231Z",
+  "versionId": "0d71e0b9-07b5-4e3d-8bb5-219934277c4b"
+}
