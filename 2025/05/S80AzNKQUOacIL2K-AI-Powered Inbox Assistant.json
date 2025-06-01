@@ -1,0 +1,1138 @@
+{
+  "active": true,
+  "connections": {
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail11",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail12",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail15",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail14",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Needs Reply": {
+      "main": [
+        [
+          {
+            "node": "Write email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Assess if message needs a reply",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assess if message needs a reply": {
+      "main": [
+        [
+          {
+            "node": "If Needs Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model2": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Gmail Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Assess if message needs a reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Cohere Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Assess if message needs a reply",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail - Create Draft": {
+      "main": [
+        []
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Write email",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write email": {
+      "main": [
+        [
+          {
+            "node": "Gmail - Create Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-05-18T17:46:35.519Z",
+  "id": "S80AzNKQUOacIL2K",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AI-Powered Inbox Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "inputText": "={{ $json.subject }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Education",
+              "description": "dedicated to academic activities, coursework, or university-related emails, possibly containing sub-labels for different subjects or educational programs."
+            },
+            {
+              "category": "Networking",
+              "description": "A label for emails related to professional connections, events, collaborations, or maintaining relationships within a network for career and personal growth."
+            },
+            {
+              "category": "Notes",
+              "description": "A general label for emails that might include personal memos, reminders, or information to be saved for future reference."
+            },
+            {
+              "category": "Personal",
+              "description": "A category for non-work-related emails, such as those involving family, friends, personal events, or hobbies."
+            },
+            {
+              "category": "Utilities",
+              "description": "Administrative and functional emails that help you manage applications, track responses, and organize resources. Provides a comprehensive system for task management."
+            },
+            {
+              "category": "Work",
+              "description": "A category for emails associated with professional responsibilities, projects, and tasks, including communication with colleagues or clients."
+            },
+            {
+              "category": "Education/Courses",
+              "description": "Emails within the Education category that include class schedules, assignments, grades, or any other communications directly tied to ongoing coursework."
+            },
+            {
+              "category": "Education/Newsletter",
+              "description": "Subscriptions and updates from academic institutions or organizations, focusing on insights, announcements, or academic trends, falling under Education."
+            },
+            {
+              "category": "Education/Research",
+              "description": "Correspondence within the Education category that pertains to research initiatives, including collaborations, proposals, and project progress."
+            },
+            {
+              "category": "Networking/Communities",
+              "description": "Part of the Networking category, this subcategory includes group announcements, organization updates, or collaborative discussions from professional or academic communities."
+            },
+            {
+              "category": "Networking/Conferences",
+              "description": "Emails under Networking that provide details about professional events, workshops, or conferences, including registration, agendas, or post-event follow-ups."
+            },
+            {
+              "category": "Networking/Mentoring",
+              "description": "Networking-related communications where guidance is exchanged, either as a mentor or mentee, to foster professional or personal development."
+            },
+            {
+              "category": "Utilities/Applications",
+              "description": "A Utilities subcategory for updates or communications about job, program, or scholarship applications, tracking progress and decisions."
+            },
+            {
+              "category": "Utilities/Awaiting Response",
+              "description": "Emails under Utilities where further action or reply is pending, helping ensure follow-ups are completed in a timely manner."
+            },
+            {
+              "category": "Utilities/Resources",
+              "description": "Saved emails in the Utilities category containing critical links, documents, or reference materials for various tasks or projects."
+            },
+            {
+              "category": "Utilities/TODO",
+              "description": "Actionable emails in the Utilities category containing tasks, deadlines, or reminders for planned activities."
+            },
+            {
+              "category": "Work/Ambulis",
+              "description": "A Work subcategory for project-specific emails tied to Ambulis, covering managerial, technical, and team correspondence. Crimson: Emails within the Work category that are specific to the Crimson project, tracking progress, tasks, or team updates for this initiative. Let me know if you'd like further refinements or additional details!"
+            }
+          ]
+        },
+        "options": {
+          "multiClass": true,
+          "systemPromptTemplate": "=Classify the email content below into up to three categories from the list: {categories}. The email may be written in Portuguese, English, or another language.\n\nReturn a complete JSON object where:\n\nEach applicable category is set to true.\n\nAll other categories are set to false.\n\nIf a subcategory (e.g., \"education/course\") applies, do not mark the parent (e.g., \"education\") as true.\n\nNo more than three categories may be marked as true in total.\n\nThe output must follow these strict rules:\n\nReturn only the JSON — no explanation, no formatting, no quotes.\n\nThe response must start with brackets and end with brackets.\n\nDo not include ```json, ` ````, or any other markdown formatting.\n\nAll categories from the list must be included in the output, even if false.\n\nThe output should be a valid JSON object and nothing else. ONLY SELECT UP TO 3 to return as positive!",
+          "enableAutoFixing": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        360
+      ],
+      "id": "8c88100c-59fc-4949-b45f-c18467d9fdbb",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "model": "mistral-saba-24b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        620
+      ],
+      "id": "4007da9e-67f0-4c92-b03a-2a466c6852fd",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "wiJyJHFYEjrlnfDv",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_7225625494262672486"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        140
+      ],
+      "id": "e2d1af20-f1d0-4b7b-89ce-e47afde21744",
+      "name": "Gmail",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_869325825564874002"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        340
+      ],
+      "id": "66c8e122-d2c2-4ada-a986-17fdcf77a6b1",
+      "name": "Gmail1",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_28"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        460,
+        140
+      ],
+      "id": "027239a1-3083-4dfc-b922-dbc0e80b38cf",
+      "name": "Gmail2",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_3781274566468432589"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        140
+      ],
+      "id": "22d63fd9-60b6-4952-b863-40c6341b503d",
+      "name": "Gmail3",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6662256127681068690"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        460,
+        340
+      ],
+      "id": "e5defe34-099c-4ab2-ba8b-eb10cda8238e",
+      "name": "Gmail4",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_7738298508829373394"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        700,
+        340
+      ],
+      "id": "ed39c9e2-3266-48ca-90a7-1d9f0dc98efe",
+      "name": "Gmail5",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_8731770445875604397"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        540
+      ],
+      "id": "046b26c6-77ac-4b43-87d9-3c2e826d457c",
+      "name": "Gmail6",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6944571560530337743"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1160,
+        340
+      ],
+      "id": "18b92476-e9b7-4850-a3df-2afb47199763",
+      "name": "Gmail7",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_298929642051498427"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        900,
+        540
+      ],
+      "id": "d1bfe0d4-03d4-40da-a7f1-efa316e0a79b",
+      "name": "Gmail8",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_5842708923117567241"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        460,
+        540
+      ],
+      "id": "50963924-3b11-4fd7-90f7-4a00284ad82c",
+      "name": "Gmail9",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_6276269302797062518"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1400,
+        340
+      ],
+      "id": "017760e8-1527-44f4-9df1-edb1774ae3d0",
+      "name": "Gmail10",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_7147886757158499429"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1400,
+        140
+      ],
+      "id": "04083a8d-06bf-4aec-9fb1-eba77e42a6f0",
+      "name": "Gmail11",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_1086968529714351955"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        700,
+        140
+      ],
+      "id": "7f2e0cb5-9065-49c1-a660-6d1874ac35dd",
+      "name": "Gmail12",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_4565967353164076287"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1160,
+        140
+      ],
+      "id": "f17bc0f9-3350-4940-bdd1-a8fa172bfced",
+      "name": "Gmail13",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_706166745824918544"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        320
+      ],
+      "id": "af9eb373-a23e-433f-9de9-9e688dcaeda7",
+      "name": "Gmail14",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_2719778423448946322"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        540
+      ],
+      "id": "1db2df58-478d-4d23-a318-3f2db9ab7cd6",
+      "name": "Gmail15",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_4762512605769313378"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1160,
+        540
+      ],
+      "id": "c9c46462-2109-409a-8399-f57cd136decc",
+      "name": "Gmail16",
+      "webhookId": "68722dad-3c54-44b5-b955-df2cf47251c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# email received trigger",
+        "height": 660,
+        "width": 300,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1220,
+        600
+      ],
+      "typeVersion": 1,
+      "id": "8d2847ce-1a54-445d-9927-6ad61e098e8c",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "53849246-ad32-4845-9976-9f9688f5a6f2",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.needsReply }}",
+              "rightValue": "true"
+            },
+            {
+              "id": "39b871ac-15bf-4cb8-8190-b7ebcf400587",
+              "leftValue": "={{ $('Gmail Trigger1').item.json.labelIds[0] }}",
+              "rightValue": "CATEGORY_PROMOTIONS",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "8e8e8206-5314-491d-8fc0-957c90660f04",
+              "leftValue": "={{ $('Gmail Trigger1').item.json.labelIds[1] }}",
+              "rightValue": "UNREAD",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "e1d50738-ed26-4779-96dd-883552c4a69d",
+              "leftValue": "={{ $('Gmail Trigger1').item.json.headers.from }}",
+              "rightValue": "wanghley",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "db5d46ac-3e3a-4f01-ab9f-9a0af15f19e9",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "de2bce8f-bd6f-40ee-8f7c-4fc8e64c7789",
+      "name": "If Needs Reply",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        60,
+        1200
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsonSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"needsReply\": {\n      \"type\": \"boolean\"\n      }\n  },\n  \"required\": [\"needsReply\"]\n}\n"
+      },
+      "id": "c982b5dd-c51a-42b9-b1fe-40e346264249",
+      "name": "JSON Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        -60,
+        1400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "=Re: {{ $('Gmail Trigger1').item.json.headers.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.output }}",
+        "options": {
+          "threadId": "={{ $('Gmail Trigger1').item.json.threadId }}",
+          "sendTo": "={{ $('Gmail Trigger1').item.json.headers.from }}"
+        }
+      },
+      "id": "cf7824cd-0dff-44da-86e4-4600a2235081",
+      "name": "Gmail - Create Draft",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        720,
+        1200
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "f71f983c-789a-4c16-9656-152e6584f395",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "prompt": "=Subject: {{ $json.subject }}\nLabel: {{ $json.labelIds[0] }}\nMessage:\n{{ $json.text.split(/\\s+/).slice(0, 2000).join(\" \")}}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Analyze an email to determine if it requires a reply based on these criteria:\\n1. Is it part of an ongoing conversation?\\n2. Does it include personal outreach or inquiry?\\n3. Does it contain a direct or implied request for action or information?\\nIf any condition is met, set `\"needsReply\"` to `true`.\\nIf the email is purely promotional, irrelevant, or requires no engagement, set `\"needsReply\"` to `false`.\\nProvide output in JSON format:\\n```json\\n{\\n  \"needsReply\": true or false,\\n  \"reason\": \"Brief explanation outlining why the email does or does not require a reply.\"\\n}\\n``` Ensure the assessment is thorough, accurate, and concise.\n\nIf the email is a promotion it should never be replied!"
+            }
+          ]
+        }
+      },
+      "id": "97396a29-d88c-44c2-8b9c-28096ed101ec",
+      "name": "Assess if message needs a reply",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        -260,
+        1200
+      ],
+      "typeVersion": 1.3,
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -220,
+        1440
+      ],
+      "id": "ff8a8e19-93b4-47db-af9e-7d4169998cd2",
+      "name": "Groq Chat Model2",
+      "credentials": {
+        "groqApi": {
+          "id": "wiJyJHFYEjrlnfDv",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 10,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "readStatus": "unread"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1140,
+        840
+      ],
+      "id": "bb21c360-dbff-44c6-a087-6968dbdf1d4c",
+      "name": "Gmail Trigger1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iI0Wf8oDEtjIdnel",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Email Labelizer Process\n\nThe **Email Labelizer** process is a crucial component of the AI-Powered Inbox Assistant. It intelligently categorizes incoming emails based on their content, ensuring that emails are organized efficiently and relevant actions can be taken. This process involves analyzing the content of emails, identifying key themes or topics, and then automatically assigning appropriate labels to each message. \n",
+        "height": 920,
+        "width": 2100
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -420,
+        -120
+      ],
+      "typeVersion": 1,
+      "id": "91c13897-4213-419a-b0e5-dbd895e3fc6a",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Categorize in labels\nalso sublabels",
+        "height": 660,
+        "width": 400,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -380,
+        60
+      ],
+      "typeVersion": 1,
+      "id": "f463aee2-7cfd-4485-b979-e5185d28f062",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "# AI Auto-Responder Process\n\nAn AI-powered tool that automatically generates concise and relevant draft replies to incoming emails, streamlining your inbox management.",
+        "height": 800,
+        "width": 1540
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -420,
+        920
+      ],
+      "typeVersion": 1,
+      "id": "b5e58dbe-10c8-4d41-8af9-881838a1ba21",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        280,
+        1440
+      ],
+      "id": "42d703a2-c1ea-43ef-80bf-c1b72af00552",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "wiJyJHFYEjrlnfDv",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "smollm2:135m",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        580
+      ],
+      "id": "f859869f-7be6-44ec-9cb8-fb24d33ecdbd",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "U1kW4598i4TaWI0d",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "model": "c4ai-aya-expanse-32b"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmCohere",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        1400
+      ],
+      "id": "2fdc2830-cffe-4116-b0c5-a349e9f16397",
+      "name": "Cohere Model",
+      "credentials": {
+        "cohereApi": {
+          "id": "UAXHmWoh6hWH8PAp",
+          "name": "CohereApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        400,
+        1480
+      ],
+      "id": "f36421f7-ca5c-4720-a801-2e158481310a",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "LvUsbrXarw0WMaD9",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write the text to reply to the following email:\n{{ $('Gmail Trigger1').item.json.subject }}\n{{ $('Gmail Trigger1').item.json.html }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert at answering emails. You need to answer them professionally based on the information you have. This is a business email. Only the body of the email, not create the subject. Write in HTML!"
+        }
+      },
+      "id": "9d0a06ac-3bfd-434f-869b-929e3712feaa",
+      "name": "Write email",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        340,
+        1200
+      ],
+      "typeVersion": 1.7
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-automations",
+  "repo_owner": "wanghley",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timeSavedPerExecution": 2
+  },
+  "staticData": {
+    "node:Gmail Trigger1": {
+      "Gmail Trigger1": {
+        "lastTimeChecked": 1748814473,
+        "possibleDuplicates": [
+          "1972d77652d92ca8",
+          "1972d6d098702248"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-06-01T21:29:16.538Z",
+  "versionId": "cf4497ee-470e-434a-8b91-3a9e45fc796c"
+}
