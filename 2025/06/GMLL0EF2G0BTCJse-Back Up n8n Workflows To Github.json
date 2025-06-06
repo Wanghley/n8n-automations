@@ -655,15 +655,15 @@
         "operation": "get",
         "owner": {
           "__rl": true,
-          "mode": "",
-          "value": "={{ $('Config').first().item.repo_owner }}"
+          "value": "={{ $json.repo_owner }}",
+          "mode": ""
         },
         "repository": {
           "__rl": true,
-          "mode": "",
-          "value": "={{ $('Config').first().item.repo_name }}"
+          "value": "={{ $json.repo_name }}",
+          "mode": ""
         },
-        "filePath": "={{ $('Config').first().item.repo_path }}{{ $('Execute Workflow Trigger').first().json.createdAt.split('-')[0] }}/{{ $('Execute Workflow Trigger').first().json.createdAt.split('-')[1] }}/{{$json.id}}.json",
+        "filePath": "={{ $('Config').first().item.repo_path }}{{ $('Execute Workflow Trigger').first().json.createdAt.split('-')[0] }}/{{ $('Execute Workflow Trigger').first().json.createdAt.split('-')[1] }}/{{$json.id}}-{{$('Execute Workflow Trigger').item.json.name}}.json",
         "asBinaryProperty": false,
         "additionalParameters": {}
       },
@@ -739,6 +739,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-06-01T22:01:00.622Z",
-  "versionId": "4e19f165-4bee-4e86-a445-72deaa7c53c6"
+  "updatedAt": "2025-06-06T13:43:18.126Z",
+  "versionId": "f78a734c-683a-405d-b328-44f8de01af18"
 }
