@@ -1,0 +1,152 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "GetAllGoogleContacts",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "GetAllMonicaContacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetAllMonicaContacts": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "GetAllGoogleContacts": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-06-11T19:33:45.358Z",
+  "id": "hnSk4iaoeeENurX2",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "CRM automation",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cdc8579d-3728-4c5c-ab47-4b3184ad1e04",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.monicaCrm",
+      "typeVersion": 1,
+      "position": [
+        260,
+        120
+      ],
+      "id": "defab6a1-e871-47c6-bbeb-e51977b91c8d",
+      "name": "GetAllMonicaContacts",
+      "credentials": {
+        "monicaCrmApi": {
+          "id": "RisaKaYA50NgYpxP",
+          "name": "Monica CRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "fields": [
+          "*"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        260,
+        -120
+      ],
+      "id": "e326f2aa-10d2-4e41-b82e-04978cb0694b",
+      "name": "GetAllGoogleContacts",
+      "credentials": {
+        "googleContactsOAuth2Api": {
+          "id": "2k02Eyy3H5jBkc0N",
+          "name": "Google Contacts account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "names.givenName",
+              "field2": "first_name"
+            },
+            {
+              "field1": "names.familyName",
+              "field2": "last_name"
+            }
+          ]
+        },
+        "fuzzyCompare": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.3,
+      "position": [
+        580,
+        -20
+      ],
+      "id": "9fd6047c-8967-4852-89b9-15a028dd19a8",
+      "name": "Compare Datasets",
+      "notesInFlow": true
+    }
+  ],
+  "pinData": {},
+  "repo_name": "n8n-automations",
+  "repo_owner": "wanghley",
+  "repo_path": "",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-11T20:59:03.871Z",
+  "versionId": "29d8cb75-98c4-41e4-98e7-12cd22fc2af1"
+}
