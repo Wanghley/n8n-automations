@@ -21,14 +21,36 @@
       "main": [
         [
           {
-            "node": "Compare Datasets",
+            "node": "NormalizeB",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
     },
     "GetAllGoogleContacts": {
+      "main": [
+        [
+          {
+            "node": "NormalizeA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NormalizeA": {
       "main": [
         [
           {
@@ -39,9 +61,119 @@
         ]
       ]
     },
-    "Compare Datasets": {
+    "NormalizeB": {
       "main": [
-        []
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "AddNewContacts": {
+      "main": [
+        [
+          {
+            "node": "GetAllInfo_from_GContact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "AddNewContacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetAllInfo_from_GContact": {
+      "main": [
+        [
+          {
+            "node": "Monica CRM1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Monica CRM",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Monica CRM2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Monica CRM3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monica CRM2": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monica CRM": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monica CRM1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monica CRM3": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -58,7 +190,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        0,
+        -80,
         0
       ],
       "id": "cdc8579d-3728-4c5c-ab47-4b3184ad1e04",
@@ -114,12 +246,12 @@
         "mergeByFields": {
           "values": [
             {
-              "field1": "names.givenName",
-              "field2": "first_name"
+              "field1": "fullName",
+              "field2": "fullName"
             },
             {
-              "field1": "names.familyName",
-              "field2": "last_name"
+              "field1": "birthdate",
+              "field2": "birthdate"
             }
           ]
         },
@@ -129,12 +261,210 @@
       "type": "n8n-nodes-base.compareDatasets",
       "typeVersion": 2.3,
       "position": [
-        580,
+        1020,
         -20
       ],
       "id": "9fd6047c-8967-4852-89b9-15a028dd19a8",
       "name": "Compare Datasets",
       "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "resource": "contactField",
+        "contactId": "={{ $json.monicaId }}",
+        "contactFieldTypeId": 2,
+        "data": "={{ $json.phoneNumbers.mobile[0] || 'undefined' }}"
+      },
+      "type": "n8n-nodes-base.monicaCrm",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        -40
+      ],
+      "id": "ab71471b-2c2f-4b74-937c-6b584c965841",
+      "name": "Monica CRM1",
+      "credentials": {
+        "monicaCrmApi": {
+          "id": "RisaKaYA50NgYpxP",
+          "name": "Monica CRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// input: multiple items from Google Contacts API\nconst contacts = $input.all();\n\nreturn contacts\n  .map(item => {\n    const contact = item.json;\n\n    const firstName = contact.names?.givenName?.trim();\n    if (!firstName) {\n      return null; // skip if firstName is missing\n    }\n\n    const middleName = contact.names?.middleName?.trim() || '';\n    let lastName = contact.names?.familyName?.trim() || '';\n\n    // Fallback to extracting last name from displayName if needed\n    if (contact.names?.displayName && !lastName) {\n      const nameParts = contact.names.displayName.trim().split(' ');\n      if (nameParts.length > 1 && nameParts[0] === firstName) {\n        lastName = nameParts.slice(1).join(' ').trim();\n      }\n    }\n\n    const fullName = `${firstName} ${lastName}`.replace(/\\s+/g, ' ').trim();\n    const nickname = contact.nicknames?.[0]?.value?.trim() || '';\n    const birthdate = contact.birthdays || null;\n\n    return {\n      json: {\n        id: contact.contactId,\n        fullName,\n        firstName,\n        middleName,\n        lastName,\n        nickname,\n        birthdate\n      }\n    };\n  })\n  .filter(item => item !== null); // remove skipped entries"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        -120
+      ],
+      "id": "b27c1454-7c7a-47d3-9cc8-d68af476e614",
+      "name": "NormalizeA"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all()\n\nreturn items.map(item => {\n  const b = item.json;\n  const firstName = b.first_name?.trim() || '';\n  const lastName = b.last_name?.trim() || '';\n  const fullName = b.complete_name?.trim() || `${firstName} ${lastName}`.trim();\n  const birthdate = b.information?.dates?.birthdate?.date || null;\n\n  return {\n    json: {\n      id: b.id,\n      fullName,\n      firstName,\n      lastName,\n      birthdate\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        120
+      ],
+      "id": "1ece8ccd-04b3-4fe7-abe5-deaa2182eef7",
+      "name": "NormalizeB"
+    },
+    {
+      "parameters": {
+        "firstName": "={{ $json.firstName }}",
+        "genderId": 3,
+        "additionalFields": {
+          "birthdate": "={{ $json.birthdate }}",
+          "last_name": "={{ $json.lastName }}",
+          "nickname": "={{ $json.nickname }}"
+        }
+      },
+      "type": "n8n-nodes-base.monicaCrm",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        -160
+      ],
+      "id": "0fe41227-27e2-4374-a2fe-3e5b3d13ffd5",
+      "name": "AddNewContacts",
+      "credentials": {
+        "monicaCrmApi": {
+          "id": "RisaKaYA50NgYpxP",
+          "name": "Monica CRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1420,
+        -180
+      ],
+      "id": "ce74e8e2-f705-46d4-b87d-71cf57ef4b25",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input datasets\nconst monicaContacts = $input.all();\nconst normalizeAContacts = $('NormalizeA').all();\nconst googleContacts = $('GetAllGoogleContacts').all();\n\nconst results = [];\n\nconsole.log(`▶ Monica contacts: ${monicaContacts.length}`);\nconsole.log(`▶ NormalizeA contacts: ${normalizeAContacts.length}`);\nconsole.log(`▶ Google Contacts: ${googleContacts.length}`);\n\nmonicaContacts.forEach(monicaItem => {\n  const monicaName = monicaItem.json.complete_name?.toLowerCase().trim();\n\n  if (!monicaName) {\n    console.log('⛔ Monica contact missing complete_name, skipping...');\n    return;\n  }\n\n  const normalizeMatch = normalizeAContacts.find(nItem =>\n    nItem.json.fullName?.toLowerCase().trim() === monicaName\n  );\n\n  if (!normalizeMatch) {\n    console.log(`❌ No match in NormalizeA for Monica name: \"${monicaName}\"`);\n    return;\n  }\n\n  const normalizeId = normalizeMatch.json.id;\n  console.log(`✅ NormalizeA match for \"${monicaName}\" → ID: ${normalizeId}`);\n\n  const googleMatch = googleContacts.find(gItem =>\n    String(gItem.json.contactId) === String(normalizeId)\n  );\n\n  if (!googleMatch) {\n    console.log(`❌ No Google contact found for NormalizeA ID: ${normalizeId}`);\n    return;\n  }\n\n  console.log(`✅ Matched Google contact for NormalizeA ID: ${normalizeId}, FullName: ${googleMatch.json.fullName}`);\n\n  const updatedGoogle = {\n    json: {\n      ...googleMatch.json,\n      monicaId: monicaItem.json.id\n    }\n  };\n\n  results.push(updatedGoogle);\n});\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        -160
+      ],
+      "id": "336bacd9-70e8-4733-9d93-17ea7ba0f391",
+      "name": "GetAllInfo_from_GContact",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "resource": "contactField",
+        "contactId": "={{ $json.monicaId }}",
+        "contactFieldTypeId": 1,
+        "data": "={{ $json.emailAddresses?.home || $json.emailAddresses?.work || 'undefined' }}"
+      },
+      "type": "n8n-nodes-base.monicaCrm",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        -220
+      ],
+      "id": "78a895d5-2327-4212-a4b2-f5d2752bb204",
+      "name": "Monica CRM",
+      "credentials": {
+        "monicaCrmApi": {
+          "id": "RisaKaYA50NgYpxP",
+          "name": "Monica CRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "contactField",
+        "contactId": "={{ $json.monicaId }}",
+        "contactFieldTypeId": 7,
+        "data": "={{ $json.urls?.find(url => url.type === \"Linkedin\")?.value || 'undefined' }}"
+      },
+      "type": "n8n-nodes-base.monicaCrm",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        -380
+      ],
+      "id": "5e39f141-4404-48bd-92b5-22aadc471c8d",
+      "name": "Monica CRM2",
+      "credentials": {
+        "monicaCrmApi": {
+          "id": "RisaKaYA50NgYpxP",
+          "name": "Monica CRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "contactField",
+        "contactId": "={{ $json.monicaId }}",
+        "contactFieldTypeId": 5,
+        "data": "={{ $json.phoneNumbers.WhatsApp || 'undefined' }}"
+      },
+      "type": "n8n-nodes-base.monicaCrm",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        160
+      ],
+      "id": "a1e38ae2-50b7-4ca5-8ccb-08828b7c5526",
+      "name": "Monica CRM3",
+      "credentials": {
+        "monicaCrmApi": {
+          "id": "RisaKaYA50NgYpxP",
+          "name": "Monica CRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2660,
+        -120
+      ],
+      "id": "3c30404e-4175-40fc-b023-7df13a4515e8",
+      "name": "Wait",
+      "webhookId": "7aca2f7a-e9ff-4996-97a0-fd79878a559a"
+    },
+    {
+      "parameters": {
+        "content": "## First migration\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
+        "height": 900,
+        "width": 3180
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -200,
+        -440
+      ],
+      "typeVersion": 1,
+      "id": "bbc7e2d4-d206-410b-af98-fa980f82874a",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {},
@@ -147,6 +477,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-11T20:59:03.871Z",
-  "versionId": "29d8cb75-98c4-41e4-98e7-12cd22fc2af1"
+  "updatedAt": "2025-06-14T17:07:08.231Z",
+  "versionId": "809171f2-88ab-4bb9-a329-994e6a5503ef"
 }
